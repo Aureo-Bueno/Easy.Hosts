@@ -1,0 +1,15 @@
+C:\Users\AureoBueno\Desktop\Easy.Hosts\Easy.Hosts.Core\bin\Debug\net5.0\Easy.Hosts.Core.deps.json
+C:\Users\AureoBueno\Desktop\Easy.Hosts\Easy.Hosts.Core\bin\Debug\net5.0\Easy.Hosts.Core.runtimeconfig.json
+C:\Users\AureoBueno\Desktop\Easy.Hosts\Easy.Hosts.Core\bin\Debug\net5.0\Easy.Hosts.Core.runtimeconfig.dev.json
+C:\Users\AureoBueno\Desktop\Easy.Hosts\Easy.Hosts.Core\bin\Debug\net5.0\Easy.Hosts.Core.dll
+C:\Users\AureoBueno\Desktop\Easy.Hosts\Easy.Hosts.Core\bin\Debug\net5.0\ref\Easy.Hosts.Core.dll
+C:\Users\AureoBueno\Desktop\Easy.Hosts\Easy.Hosts.Core\bin\Debug\net5.0\Easy.Hosts.Core.pdb
+C:\Users\AureoBueno\Desktop\Easy.Hosts\Easy.Hosts.Core\obj\Debug\net5.0\Easy.Hosts.Core.csproj.AssemblyReference.cache
+C:\Users\AureoBueno\Desktop\Easy.Hosts\Easy.Hosts.Core\obj\Debug\net5.0\Easy.Hosts.Core.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\AureoBueno\Desktop\Easy.Hosts\Easy.Hosts.Core\obj\Debug\net5.0\Easy.Hosts.Core.AssemblyInfoInputs.cache
+C:\Users\AureoBueno\Desktop\Easy.Hosts\Easy.Hosts.Core\obj\Debug\net5.0\Easy.Hosts.Core.AssemblyInfo.cs
+C:\Users\AureoBueno\Desktop\Easy.Hosts\Easy.Hosts.Core\obj\Debug\net5.0\Easy.Hosts.Core.csproj.CoreCompileInputs.cache
+C:\Users\AureoBueno\Desktop\Easy.Hosts\Easy.Hosts.Core\obj\Debug\net5.0\Easy.Hosts.Core.dll
+C:\Users\AureoBueno\Desktop\Easy.Hosts\Easy.Hosts.Core\obj\Debug\net5.0\ref\Easy.Hosts.Core.dll
+C:\Users\AureoBueno\Desktop\Easy.Hosts\Easy.Hosts.Core\obj\Debug\net5.0\Easy.Hosts.Core.pdb
+C:\Users\AureoBueno\Desktop\Easy.Hosts\Easy.Hosts.Core\obj\Debug\net5.0\Easy.Hosts.Core.genruntimeconfig.cache
