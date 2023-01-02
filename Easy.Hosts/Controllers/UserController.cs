@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Easy.Hosts.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/easyhosts/[controller]")]
     [ApiController]
     public class UserController : ControllerBase
     {
@@ -24,7 +24,24 @@ namespace Easy.Hosts.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet]
+        [HttpPost("login")]
+        public async Task<ActionResult<UserReadDto>> LoginUser(UserLoginDto userLoginDto)
+        {
+            var userCreate = _mapper.Map<User>(userLoginDto);
+
+            var userLogin = await _userService.LoginUser(userCreate);
+
+            if (userLogin != null)
+            {
+                var userReadDto = _mapper.Map<UserReadDto>(userCreate);
+
+                return Ok(_mapper.Map<UserReadDto>(userReadDto));
+            }
+
+            return NotFound();
+        }
+
+        [HttpGet("getUsers")]
         public async Task<ActionResult<IEnumerable<UserReadDto>>> GetUsers()
         {
             var userItens = await _userService.FindAllAsync();
@@ -46,8 +63,8 @@ namespace Easy.Hosts.Controllers
         }
 
         // POST api/<UserController>
-        [HttpPost]
-        public async Task<ActionResult<UserReadDto>> CreatePlatForm(UserCreateDto userCreateDto)
+        [HttpPost("insertUser")]
+        public async Task<ActionResult<UserReadDto>> InsertUser(UserCreateDto userCreateDto)
         {
             var userCreate = _mapper.Map<User>(userCreateDto);
 
@@ -56,7 +73,6 @@ namespace Easy.Hosts.Controllers
             var userReadDto = _mapper.Map<UserReadDto>(userCreate);
 
             return CreatedAtRoute(nameof(GetUserById), new { Id = userReadDto.Id }, userReadDto);
-
         }
     }
 }

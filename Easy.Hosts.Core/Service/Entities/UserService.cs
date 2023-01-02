@@ -39,5 +39,11 @@ namespace Easy.Hosts.Core.Service.Entities
             return await _context.User.FirstOrDefaultAsync(f => f.Id == id);
         }
 
+        public async Task<User> LoginUser(User user)
+        {
+            var userLogin = await _context.User.Where(w => w.Email == user.Email && w.Password == user.Password).FirstOrDefaultAsync();
+
+            return userLogin;
+        } 
     }
 }

@@ -11,6 +11,7 @@ namespace Easy.Hosts.Core.Profiles
             //Source -> Target
             CreateMap<User, UserReadDto>();
             CreateMap<UserCreateDto, User>();
+            CreateMap<UserLoginDto, User>();
         }
     }
 }

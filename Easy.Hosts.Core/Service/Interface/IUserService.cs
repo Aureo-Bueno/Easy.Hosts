@@ -12,5 +12,6 @@ namespace Easy.Hosts.Core.Service.Interface
         Task InsertAsync(User user);
         Task<IEnumerable<User>> FindAllAsync();
         Task<User> GetByIdAsync(int id);
+        Task<User> LoginUser(User user);
     }
 }
