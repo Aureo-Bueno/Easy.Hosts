@@ -23,5 +23,9 @@ namespace Easy.Hosts.Core.Persistence.Context
         }
 
         public DbSet<Bedroom> Bedroom { get; set; }
+        public DbSet<Booking> Booking { get; set; }
+        public DbSet<Event> Event { get; set; }
+        public DbSet<TypeBedroom> TypeBedroom { get; set; }
+        public DbSet<Product> Product { get; set; }
     }
 }

@@ -41,6 +41,10 @@ namespace Easy.Hosts
                          .AddEntityFrameworkStores<EasyHostsDbContext>();
 
             services.AddScoped<IBedroomService, BedroomService>();
+            services.AddScoped<IBookingService, BookingService>();
+            services.AddScoped<IEventService, EventService>();
+            services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<ITypeBedroomService, TypeBedroomService>();
 
             services.AddControllers(config =>
             {
