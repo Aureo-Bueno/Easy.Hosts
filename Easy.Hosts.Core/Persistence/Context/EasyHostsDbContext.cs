@@ -1,11 +1,12 @@
 ﻿using Easy.Hosts.Core.Domain;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Reflection;
 
 namespace Easy.Hosts.Core.Persistence.Context
 {
-    public class EasyHostsDbContext: DbContext
+    public class EasyHostsDbContext: IdentityDbContext<User>
     {
         public EasyHostsDbContext(DbContextOptions<EasyHostsDbContext> options) : base(options)
         { }
@@ -20,6 +21,7 @@ namespace Easy.Hosts.Core.Persistence.Context
             foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
                 relationship.DeleteBehavior = DeleteBehavior.Restrict;
         }
-        public DbSet<User> User { get; set; }
+
+        public DbSet<Bedroom> Bedroom { get; set; }
     }
 }

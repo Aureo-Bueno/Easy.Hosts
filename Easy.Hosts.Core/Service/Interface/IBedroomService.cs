@@ -7,11 +7,10 @@ using System.Threading.Tasks;
 
 namespace Easy.Hosts.Core.Service.Interface
 {
-    public interface IUserService
+    public interface IBedroomService
     {
-        Task InsertAsync(User user);
-        Task<IEnumerable<User>> FindAllAsync();
-        Task<User> GetByIdAsync(int id);
-        Task<User> LoginUser(User user);
+        Task InsertAsync(Bedroom bedroom);
+        Task<IEnumerable<Bedroom>> FindAllAsync();
+        Task<Bedroom> GetByIdAsync(int id);
     }
 }

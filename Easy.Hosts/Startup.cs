@@ -1,10 +1,14 @@
+using Easy.Hosts.Core.Domain;
 using Easy.Hosts.Core.Persistence.Context;
 using Easy.Hosts.Core.Service.Entities;
 using Easy.Hosts.Core.Service.Interface;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -33,9 +37,19 @@ namespace Easy.Hosts
             services.AddDbContext<EasyHostsDbContext>(option => 
                 option.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddScoped<IUserService, UserService>();
+            services.AddIdentity<User, IdentityRole>()
+                         .AddEntityFrameworkStores<EasyHostsDbContext>();
 
-            services.AddControllers();
+            services.AddScoped<IBedroomService, BedroomService>();
+
+            services.AddControllers(config =>
+            {
+                var policy = new AuthorizationPolicyBuilder()
+                       .RequireAuthenticatedUser()
+                       .Build();
+                config.Filters.Add(new AuthorizeFilter(policy));
+            });
+
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddSwaggerGen(c =>
             {
@@ -56,6 +70,8 @@ namespace Easy.Hosts
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
