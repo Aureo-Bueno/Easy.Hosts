@@ -79,17 +79,7 @@ namespace Easy.Hosts.Controllers
                 ModelState.AddModelError(string.Empty, "Login Inválido");
             }
 
-            if (Url.IsLocalUrl(returnUrl))
-            {
-                return Redirect(returnUrl);
-            }
-            else
-            {
-                return RedirectToAction("index", "home");
-            }
-
-           
-            return NotFound(userLoginDto);
+            return NotFound(returnUrl);
         }
     }
 }

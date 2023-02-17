@@ -46,13 +46,7 @@ namespace Easy.Hosts
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<ITypeBedroomService, TypeBedroomService>();
 
-            services.AddControllers(config =>
-            {
-                var policy = new AuthorizationPolicyBuilder()
-                       .RequireAuthenticatedUser()
-                       .Build();
-                config.Filters.Add(new AuthorizeFilter(policy));
-            });
+            services.AddControllers();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddSwaggerGen(c =>

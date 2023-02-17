@@ -9,7 +9,7 @@ C:\Users\AureoBueno\Desktop\Easy.Hosts\Easy.Hosts.Core\obj\Debug\net5.0\Easy.Hos
 C:\Users\AureoBueno\Desktop\Easy.Hosts\Easy.Hosts.Core\obj\Debug\net5.0\Easy.Hosts.Core.AssemblyInfo.cs
 C:\Users\AureoBueno\Desktop\Easy.Hosts\Easy.Hosts.Core\obj\Debug\net5.0\Easy.Hosts.Core.csproj.CoreCompileInputs.cache
 C:\Users\AureoBueno\Desktop\Easy.Hosts\Easy.Hosts.Core\obj\Debug\net5.0\Easy.Hosts.Core.dll
-C:\Users\AureoBueno\Desktop\Easy.Hosts\Easy.Hosts.Core\obj\Debug\net5.0\ref\Easy.Hosts.Core.dll
+C:\Users\AureoBueno\Desktop\Easy.Hosts\Easy.Hosts.Core\obj\Debug\net5.0\refint\Easy.Hosts.Core.dll
 C:\Users\AureoBueno\Desktop\Easy.Hosts\Easy.Hosts.Core\obj\Debug\net5.0\Easy.Hosts.Core.pdb
 C:\Users\AureoBueno\Desktop\Easy.Hosts\Easy.Hosts.Core\obj\Debug\net5.0\Easy.Hosts.Core.genruntimeconfig.cache
-C:\Users\AureoBueno\Desktop\Easy.Hosts\Easy.Hosts.Core\obj\Debug\net5.0\refint\Easy.Hosts.Core.dll
+C:\Users\AureoBueno\Desktop\Easy.Hosts\Easy.Hosts.Core\obj\Debug\net5.0\ref\Easy.Hosts.Core.dll
