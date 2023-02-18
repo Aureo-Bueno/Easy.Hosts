@@ -47,6 +47,10 @@ namespace Easy.Hosts
             services.AddScoped<ITypeBedroomService, TypeBedroomService>();
 
             services.AddControllers();
+            services.AddCors(option => {
+                option.AddPolicy("AllowSpecificOrigin", policy => policy.WithOrigins("http://localhost:3000"));
+                option.AddPolicy("AllowGetMethod", policy => policy.WithMethods("GET"));
+            });
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddSwaggerGen(c =>
@@ -72,6 +76,8 @@ namespace Easy.Hosts
             app.UseAuthentication();
 
             app.UseAuthorization();
+
+            app.UseCors("AllowSpecificOrigin"); 
 
             app.UseEndpoints(endpoints =>
             {

@@ -3,6 +3,7 @@ using Easy.Hosts.Core.Domain;
 using Easy.Hosts.Core.DTOs.Bedroom;
 using Easy.Hosts.Core.Service.Interface;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -14,7 +15,6 @@ namespace Easy.Hosts.Controllers
 {
     [Route("api/easyhosts/[controller]")]
     [ApiController]
-    [Authorize]
     public class BedroomController : ControllerBase
     {
         private readonly IBedroomService _bedroomService;
