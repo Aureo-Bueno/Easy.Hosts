@@ -1,6 +1,7 @@
 ﻿using Easy.Hosts.Core.Domain;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System.Linq;
 using System.Reflection;
 
@@ -8,8 +9,17 @@ namespace Easy.Hosts.Core.Persistence.Context
 {
     public class EasyHostsDbContext: IdentityDbContext<User>
     {
-        public EasyHostsDbContext(DbContextOptions<EasyHostsDbContext> options) : base(options)
-        { }
+        protected readonly IConfiguration Configuration;
+        public EasyHostsDbContext(DbContextOptions<EasyHostsDbContext> options, IConfiguration configuration) : base(options)
+        {
+            Configuration = configuration;
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder options)
+        {
+            // connect to sql server with connection string from app settings
+            options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
