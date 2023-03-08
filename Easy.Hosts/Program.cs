@@ -33,12 +33,22 @@ builder.Services.AddCors(option => {
     option.AddPolicy("AllowGetMethod", policy => policy.WithMethods("GET"));
 });
 
+builder.Services.Configure<IdentityOptions>(options =>
+{
+    // Default Lockout settings.
+    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromHours(5);
+    options.Lockout.MaxFailedAccessAttempts = 5;
+    options.Lockout.AllowedForNewUsers = true;
+});
+
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "Easy.Hosts", Description = "API", Version = "v1" });
 });
 
 var app = builder.Build();
+
+app.UseHttpLogging();
 
 if (app.Environment.IsDevelopment())
 {
