@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
 namespace Easy.Hosts.Controllers
 {
     [Route("api/easyhosts/[controller]")]
     [ApiController]
+    [Authorize]
     public class BookingController : ControllerBase
     {
         // GET: api/<BookingController>

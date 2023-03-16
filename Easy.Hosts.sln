@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.33027.164
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33424.131
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Easy.Hosts", "Easy.Hosts\Easy.Hosts.csproj", "{812776CA-8A45-425D-B94B-4CA948A1C9CD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Easy.Hosts.Core", "Easy.Hosts.Core\Easy.Hosts.Core.csproj", "{431837C4-5F5D-49F8-B414-09F9D64C73EF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Easy.Hosts.Core", "Easy.Hosts.Core\Easy.Hosts.Core.csproj", "{431837C4-5F5D-49F8-B414-09F9D64C73EF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Easy.Hosts.Test", "Easy.Hosts.Test\Easy.Hosts.Test.csproj", "{B78EA916-1896-45AF-95F4-26F2AACE0D88}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{431837C4-5F5D-49F8-B414-09F9D64C73EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{431837C4-5F5D-49F8-B414-09F9D64C73EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{431837C4-5F5D-49F8-B414-09F9D64C73EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B78EA916-1896-45AF-95F4-26F2AACE0D88}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B78EA916-1896-45AF-95F4-26F2AACE0D88}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B78EA916-1896-45AF-95F4-26F2AACE0D88}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B78EA916-1896-45AF-95F4-26F2AACE0D88}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

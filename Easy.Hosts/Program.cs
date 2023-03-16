@@ -9,72 +9,73 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using System;
 
-var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
-
-builder.Services.AddDbContext<EasyHostsDbContext>();
-
-builder.Services.AddIdentity<User, IdentityRole>()
-             .AddEntityFrameworkStores<EasyHostsDbContext>();
-
-builder.Services.AddScoped<IBedroomService, BedroomService>();
-builder.Services.AddScoped<IBookingService, BookingService>();
-builder.Services.AddScoped<IEventService, EventService>();
-builder.Services.AddScoped<IProductService, ProductService>();
-builder.Services.AddScoped<ITypeBedroomService, TypeBedroomService>();
-
-builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-
-builder.Services.AddControllers();
-
-builder.Services.AddCors(option => {
-    option.AddPolicy("AllowSpecificOrigin", policy => policy.WithOrigins("http://localhost:3000"));
-    option.AddPolicy("AllowGetMethod", policy => policy.WithMethods("GET"));
-});
-
-builder.Services.Configure<IdentityOptions>(options =>
+WebApplicationBuilder builder = WebApplication.CreateBuilder();
 {
-    // Default Lockout settings.
-    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromHours(5);
-    options.Lockout.MaxFailedAccessAttempts = 5;
-    options.Lockout.AllowedForNewUsers = true;
-});
+    builder.Services.AddDbContext<EasyHostsDbContext>();
 
-builder.Services.AddSwaggerGen(c =>
+    builder.Services.AddIdentity<User, IdentityRole>()
+                 .AddEntityFrameworkStores<EasyHostsDbContext>()
+                 .AddDefaultTokenProviders();
+
+    builder.Services.AddScoped<IBedroomService, BedroomService>();
+    builder.Services.AddScoped<IBookingService, BookingService>();
+    builder.Services.AddScoped<IEventService, EventService>();
+    builder.Services.AddScoped<IProductService, ProductService>();
+    builder.Services.AddScoped<ITypeBedroomService, TypeBedroomService>();
+
+    builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+    builder.Services.AddControllers();
+
+    builder.Services.AddCors(option => {
+        option.AddPolicy("AllowSpecificOrigin", policy => policy.WithOrigins("http://localhost:3000"));
+        option.AddPolicy("AllowGetMethod", policy => policy.WithMethods("GET"));
+    });
+
+    builder.Services.Configure<IdentityOptions>(options =>
+    {
+        // Default Lockout settings.
+        options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromHours(5);
+        options.Lockout.MaxFailedAccessAttempts = 5;
+        options.Lockout.AllowedForNewUsers = true;
+    });
+
+    builder.Services.AddSwaggerGen(c =>
+    {
+        c.SwaggerDoc("v1", new OpenApiInfo { Title = "Easy.Hosts", Description = "API", Version = "v1" });
+    });
+};
+
+WebApplication app = builder.Build();
 {
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Easy.Hosts", Description = "API", Version = "v1" });
-});
+    app.UseHttpLogging();
 
-var app = builder.Build();
+    if (app.Environment.IsDevelopment())
+    {
+        app.UseDeveloperExceptionPage();
+    }
 
-app.UseHttpLogging();
+    app.UseSwagger();
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseDeveloperExceptionPage();
-}
-
-app.UseSwagger();
-
-app.UseSwaggerUI(c =>
-{
-    c.SwaggerEndpoint("/swagger/v1/swagger.json", "APISaudacao v1");
-});
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "APISaudacao v1");
+    });
 
 
-// Configure the HTTP request pipeline.
+    // Configure the HTTP request pipeline.
 
-app.UseHttpsRedirection();
+    app.UseHttpsRedirection();
 
-app.UseRouting();
+    app.UseRouting();
 
-app.UseAuthorization();
+    app.UseAuthorization();
 
-app.UseAuthentication();
+    app.UseAuthentication();
 
-app.MapControllers();
+    app.MapControllers();
 
-app.UseCors("AllowSpecificOrigin");
+    app.UseCors("AllowSpecificOrigin");
 
-app.Run();
+    app.Run();
+};

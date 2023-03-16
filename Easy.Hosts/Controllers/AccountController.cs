@@ -28,7 +28,6 @@ namespace Easy.Hosts.Controllers
         {
             if (ModelState.IsValid)
             {
-                // Copia os dados do RegisterViewModel para o IdentityUser
                 var user = new User
                 {
                     UserName = userRegisterDto.Email,
@@ -36,10 +35,7 @@ namespace Easy.Hosts.Controllers
                     Cpf = userRegisterDto.Cpf
                 };
 
-                // Armazena os dados do usuário na tabela AspNetUsers
                 var result = await _userManager.CreateAsync(user, userRegisterDto.Password);
-                // Se o usuário foi criado com sucesso, faz o login do usuário
-                // usando o serviço SignInManager e redireciona para o Método Action Index
 
                 if (result.Succeeded)
                 {
@@ -47,8 +43,6 @@ namespace Easy.Hosts.Controllers
                     return Ok(user);
                 }
 
-                // Se houver erros então inclui no ModelState
-                // que será exibido pela tag helper summary na validação
                 foreach (var error in result.Errors)
                 {
                     ModelState.AddModelError(string.Empty, error.Description);

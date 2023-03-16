@@ -6334,19 +6334,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\AureoBueno\\.nuget\\packages\\": {}
+    "C:\\Users\\User\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\AureoBueno\\Desktop\\Easy.Hosts\\Easy.Hosts.Core\\Easy.Hosts.Core.csproj",
+      "projectUniqueName": "C:\\Users\\User\\Desktop\\Easy.Hosts\\Easy.Hosts.Core\\Easy.Hosts.Core.csproj",
       "projectName": "Easy.Hosts.Core",
-      "projectPath": "C:\\Users\\AureoBueno\\Desktop\\Easy.Hosts\\Easy.Hosts.Core\\Easy.Hosts.Core.csproj",
-      "packagesPath": "C:\\Users\\AureoBueno\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\AureoBueno\\Desktop\\Easy.Hosts\\Easy.Hosts.Core\\obj\\",
+      "projectPath": "C:\\Users\\User\\Desktop\\Easy.Hosts\\Easy.Hosts.Core\\Easy.Hosts.Core.csproj",
+      "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\User\\Desktop\\Easy.Hosts\\Easy.Hosts.Core\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\AureoBueno\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -6417,7 +6417,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.102\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.201\\RuntimeIdentifierGraph.json"
       }
     }
   }
