@@ -35,7 +35,7 @@ namespace Easy.Hosts.Controllers
                     Cpf = userRegisterDto.Cpf
                 };
 
-                var result = await _userManager.CreateAsync(user, userRegisterDto.Password);
+                IdentityResult result = await _userManager.CreateAsync(user, userRegisterDto.Password);
 
                 if (result.Succeeded)
                 {

@@ -13,6 +13,8 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder();
 {
     builder.Services.AddDbContext<EasyHostsDbContext>();
 
+    builder.Services.AddScoped<EasyHostsDbContext>();
+
     builder.Services.AddIdentity<User, IdentityRole>()
                  .AddEntityFrameworkStores<EasyHostsDbContext>()
                  .AddDefaultTokenProviders();
@@ -27,7 +29,8 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder();
 
     builder.Services.AddControllers();
 
-    builder.Services.AddCors(option => {
+    builder.Services.AddCors(option =>
+    {
         option.AddPolicy("AllowSpecificOrigin", policy => policy.WithOrigins("http://localhost:3000"));
         option.AddPolicy("AllowGetMethod", policy => policy.WithMethods("GET"));
     });
@@ -40,9 +43,25 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder();
         options.Lockout.AllowedForNewUsers = true;
     });
 
-    builder.Services.AddSwaggerGen(c =>
+    builder.Services.AddSwaggerGen(options =>
     {
-        c.SwaggerDoc("v1", new OpenApiInfo { Title = "Easy.Hosts", Description = "API", Version = "v1" });
+        options.SwaggerDoc("v1", new OpenApiInfo
+        {
+            Version = "v1",
+            Title = "Easy.Hosts API",
+            Description = "Project Fatec Guaratinguetá",
+            TermsOfService = new Uri("https://example.com/terms"),
+            Contact = new OpenApiContact
+            {
+                Name = "Example Contact",
+                Url = new Uri("https://example.com/contact")
+            },
+            License = new OpenApiLicense
+            {
+                Name = "Example License",
+                Url = new Uri("https://example.com/license")
+            }
+        });
     });
 };
 
@@ -55,7 +74,10 @@ WebApplication app = builder.Build();
         app.UseDeveloperExceptionPage();
     }
 
-    app.UseSwagger();
+    app.UseSwagger(options =>
+    {
+        options.SerializeAsV2 = true;
+    });
 
     app.UseSwaggerUI(c =>
     {
