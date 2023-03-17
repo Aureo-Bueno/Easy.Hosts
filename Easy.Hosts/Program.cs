@@ -29,11 +29,7 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder();
 
     builder.Services.AddControllers();
 
-    builder.Services.AddCors(option =>
-    {
-        option.AddPolicy("AllowSpecificOrigin", policy => policy.WithOrigins("http://localhost:3000"));
-        option.AddPolicy("AllowGetMethod", policy => policy.WithMethods("GET"));
-    });
+    builder.Services.AddCors();
 
     builder.Services.Configure<IdentityOptions>(options =>
     {
@@ -86,7 +82,11 @@ WebApplication app = builder.Build();
 
     app.MapControllers();
 
-    app.UseCors("AllowSpecificOrigin");
+    app.UseCors(builder =>
+        builder.AllowAnyOrigin()
+        .AllowAnyHeader()
+        .AllowAnyMethod()
+    ); ;
 
     app.Run();
 };

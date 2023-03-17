@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "v6KDw9rzIMzHRQ2gqeE6FqgVvYcyl+z5xgASibLE8FgkqEi9Lll1DGG4lx/CnxGWJuXNzf8nQF20HeFcs/Xd7g==",
+  "dgSpecHash": "g7iYr4Fi558T3LbBikLpAiNA5HETtxPfb/H+JoXvSqicaRP2OGjU3vlkQXjWC9M+L2mj20+LkB9aLy3Ad0wKCQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\User\\Desktop\\Easy.Hosts\\Easy.Hosts.Core\\Easy.Hosts.Core.csproj",
+  "projectFilePath": "C:\\Users\\User\\Desktop\\TG\\Easy.Hosts\\Easy.Hosts.Core\\Easy.Hosts.Core.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\User\\.nuget\\packages\\automapper\\12.0.0\\automapper.12.0.0.nupkg.sha512",
     "C:\\Users\\User\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.0\\automapper.extensions.microsoft.dependencyinjection.12.0.0.nupkg.sha512",

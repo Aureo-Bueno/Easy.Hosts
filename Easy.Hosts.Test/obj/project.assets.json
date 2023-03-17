@@ -6119,11 +6119,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\User\\Desktop\\Easy.Hosts\\Easy.Hosts.Test\\Easy.Hosts.Test.csproj",
+      "projectUniqueName": "C:\\Users\\User\\Desktop\\TG\\Easy.Hosts\\Easy.Hosts.Test\\Easy.Hosts.Test.csproj",
       "projectName": "Easy.Hosts.Test",
-      "projectPath": "C:\\Users\\User\\Desktop\\Easy.Hosts\\Easy.Hosts.Test\\Easy.Hosts.Test.csproj",
+      "projectPath": "C:\\Users\\User\\Desktop\\TG\\Easy.Hosts\\Easy.Hosts.Test\\Easy.Hosts.Test.csproj",
       "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\User\\Desktop\\Easy.Hosts\\Easy.Hosts.Test\\obj\\",
+      "outputPath": "C:\\Users\\User\\Desktop\\TG\\Easy.Hosts\\Easy.Hosts.Test\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
