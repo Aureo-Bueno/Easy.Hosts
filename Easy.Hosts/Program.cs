@@ -50,17 +50,6 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder();
             Version = "v1",
             Title = "Easy.Hosts API",
             Description = "Project Fatec Guaratinguetá",
-            TermsOfService = new Uri("https://example.com/terms"),
-            Contact = new OpenApiContact
-            {
-                Name = "Example Contact",
-                Url = new Uri("https://example.com/contact")
-            },
-            License = new OpenApiLicense
-            {
-                Name = "Example License",
-                Url = new Uri("https://example.com/license")
-            }
         });
     });
 };
