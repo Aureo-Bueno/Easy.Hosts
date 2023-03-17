@@ -32,7 +32,7 @@ namespace Easy.Hosts.Controllers
         [HttpGet("{id}", Name = "GetBedroomById")]
         public async Task<ActionResult<BedroomReadDto>> GetBedroomById(int id)
         {
-            var bedroomItem = await _bedroomService.GetByIdAsync(id);
+            Bedroom bedroomItem = await _bedroomService.GetByIdAsync(id);
 
             if (bedroomItem != null)
             {
@@ -47,11 +47,11 @@ namespace Easy.Hosts.Controllers
         [HttpPost("insertBedroom")]
         public async Task<ActionResult<BedroomReadDto>> InsertBedroom(BedroomCreateDto bedroomCreateDto)
         {
-            var bedroomCreate = _mapper.Map<Bedroom>(bedroomCreateDto);
+            Bedroom bedroomCreate = _mapper.Map<Bedroom>(bedroomCreateDto);
 
             await _bedroomService.InsertAsync(bedroomCreate);
 
-            var bedroomReadDto = _mapper.Map<BedroomReadDto>(bedroomCreate);
+            BedroomReadDto bedroomReadDto = _mapper.Map<BedroomReadDto>(bedroomCreate);
 
             _logger.LogWarning(MyLogEvents.InsertItem, "Insert item: ({_bedroomService})", _bedroomService);
 
@@ -61,7 +61,7 @@ namespace Easy.Hosts.Controllers
         [HttpGet("getBedrooms")]
         public async Task<ActionResult<IEnumerable<BedroomReadDto>>> GetBedroom()
         {
-            var bedroomsItens = await _bedroomService.FindAllAsync();
+            IEnumerable<Bedroom> bedroomsItens = await _bedroomService.FindAllAsync();
 
             return Ok(_mapper.Map<IEnumerable<BedroomReadDto>>(bedroomsItens));
         }
