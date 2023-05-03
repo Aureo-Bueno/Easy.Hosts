@@ -20,6 +20,14 @@ namespace Easy.Hosts.Core.Persistence.Configuration
 
             builder.Property(p => p.Number)
                 .HasColumnName("NUMBER");
+
+            builder.Property(p => p.CreatedAt)
+                .HasColumnName("CREATED_AT")
+                .HasDefaultValueSql("GetUtcDate()");
+
+            builder.Property(p => p.UpdatedAt)
+                .HasColumnName("UPDATED_AT")
+                .HasDefaultValueSql("GetUtcDate()");
         }
     }
 }

@@ -1,12 +1,10 @@
 ﻿using System;
 
-namespace Easy.Hosts.Core.DTOs.Bedroom
+namespace Easy.Hosts.Core.Domain.Model
 {
-    public class BedroomReadDto
+    public abstract class BaseModel
     {
         public Guid Id { get; set; }
-        public string Name { get; set; }
-        public int Number { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
     }

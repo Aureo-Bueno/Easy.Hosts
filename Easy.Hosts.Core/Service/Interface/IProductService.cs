@@ -11,6 +11,6 @@ namespace Easy.Hosts.Core.Service.Interface
     {
         Task InsertAsync(Product product);
         Task<IEnumerable<Product>> FindAllAsync();
-        Task<Product> GetByIdAsync(int id);
+        Task<Product> GetByIdAsync(Guid id);
     }
 }

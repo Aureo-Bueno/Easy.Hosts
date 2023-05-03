@@ -25,7 +25,16 @@ namespace Easy.Hosts.Core.Service.Entities
                 throw new ArgumentException(nameof(bedroom));
             }
 
-            await _context.Bedroom.AddAsync(bedroom);
+            Bedroom bedromNew = new()
+            {
+                Id = Guid.NewGuid(),
+                Name = bedroom.Name,
+                Number = bedroom.Number,
+                CreatedAt = DateTime.UtcNow,
+                UpdatedAt = DateTime.UtcNow,
+            };
+
+            await _context.Bedroom.AddAsync(bedromNew);
             await _context.SaveChangesAsync();
         }
 
@@ -34,7 +43,7 @@ namespace Easy.Hosts.Core.Service.Entities
             return await _context.Bedroom.ToListAsync();
         }
 
-        public async Task<Bedroom> GetByIdAsync(int id)
+        public async Task<Bedroom> GetByIdAsync(Guid id)
         {
             return await _context.Bedroom.FirstOrDefaultAsync(f => f.Id == id);
         }

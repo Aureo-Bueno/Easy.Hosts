@@ -11,6 +11,6 @@ namespace Easy.Hosts.Core.Service.Interface
     {
         Task InsertAsync(Event @event);
         Task<IEnumerable<Event>> FindAllAsync();
-        Task<Event> GetByIdAsync(int id);
+        Task<Event> GetByIdAsync(Guid id);
     }
 }

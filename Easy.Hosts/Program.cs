@@ -26,10 +26,8 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder();
     builder.Services.AddScoped<ITypeBedroomService, TypeBedroomService>();
 
     builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-
-    builder.Services.AddControllers();
-
     builder.Services.AddCors();
+    builder.Services.AddControllers();
 
     builder.Services.Configure<IdentityOptions>(options =>
     {
@@ -69,24 +67,17 @@ WebApplication app = builder.Build();
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "APISaudacao v1");
     });
 
-
-    // Configure the HTTP request pipeline.
-
-    app.UseHttpsRedirection();
-
-    app.UseRouting();
-
-    app.UseAuthorization();
-
-    app.UseAuthentication();
-
-    app.MapControllers();
-
     app.UseCors(builder =>
-        builder.AllowAnyOrigin()
+      builder
+        .AllowAnyOrigin()
         .AllowAnyHeader()
         .AllowAnyMethod()
-    ); ;
+    );
 
+    app.UseHttpsRedirection();
+    app.UseRouting();
+    app.UseAuthorization();
+    app.UseAuthentication();
+    app.MapControllers();
     app.Run();
 };

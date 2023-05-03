@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Easy.Hosts.Core.Domain.Model;
 
 namespace Easy.Hosts.Core.Domain
 {
-    public class TypeBedroom
+    public class TypeBedroom : BaseModel
     {
-        public int Id { get; set; }
     }
 }

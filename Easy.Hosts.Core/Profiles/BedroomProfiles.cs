@@ -8,9 +8,8 @@ namespace Easy.Hosts.Core.Profiles
     {
         public BedroomProfiles()
         {
-            //Source -> Target
-            CreateMap<Bedroom, BedroomReadDto>();
-            CreateMap<BedroomCreateDto, Bedroom>();
+            CreateMap<Bedroom, BedroomReadDto>().ReverseMap();
+            CreateMap<Bedroom, BedroomCreateDto>().ReverseMap();
         }
     }
 }

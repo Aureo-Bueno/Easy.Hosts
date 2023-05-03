@@ -3,9 +3,6 @@ using Easy.Hosts.Core.Domain;
 using Easy.Hosts.Core.DTOs.Bedroom;
 using Easy.Hosts.Core.Events;
 using Easy.Hosts.Core.Service.Interface;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Cors;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -30,7 +27,7 @@ namespace Easy.Hosts.Controllers
         }
 
         [HttpGet("{id}", Name = "GetBedroomById")]
-        public async Task<ActionResult<BedroomReadDto>> GetBedroomById(int id)
+        public async Task<ActionResult<BedroomReadDto>> GetBedroomById(Guid id)
         {
             Bedroom bedroomItem = await _bedroomService.GetByIdAsync(id);
 

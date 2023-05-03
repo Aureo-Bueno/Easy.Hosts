@@ -34,7 +34,7 @@ namespace Easy.Hosts.Core.Service.Entities
             return await _context.Event.ToListAsync();
         }
 
-        public async Task<Event> GetByIdAsync(int id)
+        public async Task<Event> GetByIdAsync(Guid id)
         {
             return await _context.Event.FirstOrDefaultAsync(f => f.Id == id);
         }

@@ -1,9 +1,11 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
+#nullable disable
+
 namespace Easy.Hosts.Core.Migrations
 {
-    public partial class AddIdentity : Migration
+    public partial class AddTablesBase : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -26,6 +28,7 @@ namespace Easy.Hosts.Core.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Cpf = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -50,14 +53,67 @@ namespace Easy.Hosts.Core.Migrations
                 name: "TB_BEDROOM",
                 columns: table => new
                 {
-                    BEDROOM_ID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    BEDROOM_ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     NAME = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    NUMBER = table.Column<int>(type: "int", nullable: false)
+                    NUMBER = table.Column<int>(type: "int", nullable: false),
+                    CREATED_AT = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GetUtcDate()"),
+                    UPDATED_AT = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GetUtcDate()")
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_TB_BEDROOM", x => x.BEDROOM_ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TB_BOOKING",
+                columns: table => new
+                {
+                    BOOKING_ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TB_BOOKING", x => x.BOOKING_ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TB_EVENT",
+                columns: table => new
+                {
+                    EVENT_ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TB_EVENT", x => x.EVENT_ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TB_PRODUCT",
+                columns: table => new
+                {
+                    PRODUCT_ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TB_PRODUCT", x => x.PRODUCT_ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TB_TYPE_BEDROOM",
+                columns: table => new
+                {
+                    TYPE_BEDROOM_ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TB_TYPE_BEDROOM", x => x.TYPE_BEDROOM_ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -225,6 +281,18 @@ namespace Easy.Hosts.Core.Migrations
 
             migrationBuilder.DropTable(
                 name: "TB_BEDROOM");
+
+            migrationBuilder.DropTable(
+                name: "TB_BOOKING");
+
+            migrationBuilder.DropTable(
+                name: "TB_EVENT");
+
+            migrationBuilder.DropTable(
+                name: "TB_PRODUCT");
+
+            migrationBuilder.DropTable(
+                name: "TB_TYPE_BEDROOM");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
