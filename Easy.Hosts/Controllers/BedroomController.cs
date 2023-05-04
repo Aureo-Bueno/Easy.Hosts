@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Easy.Hosts.Core.Domain;
+﻿using Easy.Hosts.Core.Domain;
 using Easy.Hosts.Core.DTOs.Bedroom;
 using Easy.Hosts.Core.Events;
 using Easy.Hosts.Core.Service.Interface;
@@ -7,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Easy.Hosts.Controllers
@@ -17,50 +15,51 @@ namespace Easy.Hosts.Controllers
     public class BedroomController : ControllerBase
     {
         private readonly IBedroomService _bedroomService;
-        private readonly IMapper _mapper;
         private readonly ILogger _logger;
-        public BedroomController(IBedroomService bedroomService, IMapper mapper, ILogger<BedroomController> logger)
+        public BedroomController(IBedroomService bedroomService, ILogger<BedroomController> logger)
         {
             _bedroomService = bedroomService;
-            _mapper = mapper;
             _logger = logger;
         }
 
-        [HttpGet("{id}", Name = "GetBedroomById")]
-        public async Task<ActionResult<BedroomReadDto>> GetBedroomById(Guid id)
+        [HttpGet("{id:guid}")]
+        public async Task<IActionResult> GetById(Guid id)
         {
-            Bedroom bedroomItem = await _bedroomService.GetByIdAsync(id);
-
-            if (bedroomItem != null)
-            {
-                _logger.LogWarning(MyLogEvents.GetItem, "Geting item: ({Id})", id);
-                return Ok(_mapper.Map<BedroomReadDto>(bedroomItem));
-            }
-
-            _logger.LogWarning(MyLogEvents.GetItemNotFound, "Get({Id}) NOT FOUND", id);
-            return NotFound(bedroomItem);
+            BedroomReadDto result = await _bedroomService.GetByIdAsync(id);
+            _logger.LogWarning(MyLogEvents.GetItemNotFound, $"Get({id}) NOT FOUND");
+            return result is not null ? Ok(result) : NotFound();
         }
 
-        [HttpPost("insertBedroom")]
-        public async Task<ActionResult<BedroomReadDto>> InsertBedroom(BedroomCreateDto bedroomCreateDto)
+        [HttpPost]
+        public async Task<IActionResult> Insert([FromBody] BedroomCreateDto bedroomCreateDto)
         {
-            Bedroom bedroomCreate = _mapper.Map<Bedroom>(bedroomCreateDto);
+            BedroomReadDto result = await _bedroomService.InsertAsync(bedroomCreateDto);
 
-            await _bedroomService.InsertAsync(bedroomCreate);
+            _logger.LogWarning(MyLogEvents.InsertItem, $"Insert item: ({result})");
 
-            BedroomReadDto bedroomReadDto = _mapper.Map<BedroomReadDto>(bedroomCreate);
-
-            _logger.LogWarning(MyLogEvents.InsertItem, "Insert item: ({_bedroomService})", _bedroomService);
-
-            return CreatedAtRoute(nameof(GetBedroomById), new { Id = bedroomReadDto.Id }, bedroomReadDto);
+            return result is not null ? Ok(result) : NoContent();
         }
 
-        [HttpGet("getBedrooms")]
-        public async Task<ActionResult<IEnumerable<BedroomReadDto>>> GetBedroom()
+        [HttpGet()]
+        public async Task<IActionResult> GetAll()
         {
-            IEnumerable<Bedroom> bedroomsItens = await _bedroomService.FindAllAsync();
+            IEnumerable<BedroomReadDto> results = await _bedroomService.FindAllAsync();
 
-            return Ok(_mapper.Map<IEnumerable<BedroomReadDto>>(bedroomsItens));
+            return results is not null ? Ok(results) : NotFound();
+        }
+
+        [HttpDelete("{id:guid}")]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            bool result = await _bedroomService.DeleteAsync(id);
+            return result ? Ok() : NotFound();
+        }
+
+        [HttpPut("{id:guid}")]
+        public async Task<IActionResult> Update([FromBody] BedroomUpdateDto bedroomUpdateDto,Guid id)
+        {
+            BedroomReadDto result = await _bedroomService.UpdateAsync(id, bedroomUpdateDto);
+            return result is not null ? Ok(result) : NotFound();
         }
     }
 }

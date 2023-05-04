@@ -1,16 +1,18 @@
 ﻿using Easy.Hosts.Core.Domain;
+using Easy.Hosts.Core.DTOs.Bedroom;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Easy.Hosts.Core.Service.Interface
 {
     public interface IBedroomService
     {
-        Task InsertAsync(Bedroom bedroom);
-        Task<IEnumerable<Bedroom>> FindAllAsync();
-        Task<Bedroom> GetByIdAsync(Guid id);
+        Task<BedroomReadDto> InsertAsync(BedroomCreateDto bedroom);
+        Task<IEnumerable<BedroomReadDto>> FindAllAsync();
+        Task<BedroomReadDto> GetByIdAsync(Guid id);
+        Task<bool> DeleteAsync(Guid id);
+        Task<BedroomReadDto> UpdateAsync(Guid id, BedroomUpdateDto bedroomUpdateDto);
+
     }
 }
