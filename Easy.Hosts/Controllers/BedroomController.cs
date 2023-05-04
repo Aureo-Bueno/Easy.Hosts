@@ -26,7 +26,7 @@ namespace Easy.Hosts.Controllers
         public async Task<IActionResult> GetById(Guid id)
         {
             BedroomReadDto result = await _bedroomService.GetByIdAsync(id);
-            _logger.LogWarning(MyLogEvents.GetItemNotFound, $"Get({id}) NOT FOUND");
+            _logger.LogWarning(MyLogEvents.GetItem, $"Get Bedroom Id: ({id})");
             return result is not null ? Ok(result) : NotFound();
         }
 
@@ -35,7 +35,7 @@ namespace Easy.Hosts.Controllers
         {
             BedroomReadDto result = await _bedroomService.InsertAsync(bedroomCreateDto);
 
-            _logger.LogWarning(MyLogEvents.InsertItem, $"Insert item: ({result})");
+            _logger.LogWarning(MyLogEvents.InsertItem, $"Insert Bedroom item: {result.Id}, {result.Name}");
 
             return result is not null ? Ok(result) : NoContent();
         }
@@ -45,6 +45,9 @@ namespace Easy.Hosts.Controllers
         {
             IEnumerable<BedroomReadDto> results = await _bedroomService.FindAllAsync();
 
+            foreach (var item in results)
+                _logger.LogWarning(MyLogEvents.GetItem, $"Get Bedroom Id: ({item.Id})");
+
             return results is not null ? Ok(results) : NotFound();
         }
 
@@ -52,6 +55,7 @@ namespace Easy.Hosts.Controllers
         public async Task<IActionResult> Delete(Guid id)
         {
             bool result = await _bedroomService.DeleteAsync(id);
+            _logger.LogWarning(MyLogEvents.DeleteItem, $"Deleted Bedroom Id: ({id})");
             return result ? Ok() : NotFound();
         }
 
@@ -59,6 +63,7 @@ namespace Easy.Hosts.Controllers
         public async Task<IActionResult> Update([FromBody] BedroomUpdateDto bedroomUpdateDto,Guid id)
         {
             BedroomReadDto result = await _bedroomService.UpdateAsync(id, bedroomUpdateDto);
+            _logger.LogWarning(MyLogEvents.UpdateItem, $"Updated Bedroom Id: ({id})");
             return result is not null ? Ok(result) : NotFound();
         }
     }

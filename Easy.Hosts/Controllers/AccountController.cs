@@ -1,13 +1,10 @@
 ﻿using Easy.Hosts.Core.Domain;
 using Easy.Hosts.Core.DTOs.User;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
+using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
 
 namespace Easy.Hosts.Controllers
 {
@@ -17,36 +14,30 @@ namespace Easy.Hosts.Controllers
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
+        private readonly ILogger _logger;
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, ILogger logger)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _logger = logger;
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register(UserRegisterDto userRegisterDto)
+        public async Task<IActionResult> Register([FromBody]UserRegisterDto userRegisterDto)
         {
-            if (ModelState.IsValid)
+            User user = new()
             {
-                var user = new User
-                {
-                    UserName = userRegisterDto.Email,
-                    Email = userRegisterDto.Email,
-                    Cpf = userRegisterDto.Cpf
-                };
+               UserName = userRegisterDto.Email,
+               Email = userRegisterDto.Email,
+               Cpf = userRegisterDto.Cpf
+            };
 
-                IdentityResult result = await _userManager.CreateAsync(user, userRegisterDto.Password);
+            IdentityResult result = await _userManager.CreateAsync(user, userRegisterDto.Password);
 
-                if (result.Succeeded)
-                {
-                    await _signInManager.SignInAsync(user, isPersistent: false);
-                    return Ok(user);
-                }
-
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError(string.Empty, error.Description);
-                }
+            if (result.Succeeded)
+            {
+               await _signInManager.SignInAsync(user, isPersistent: false);
+               return Ok(user);
             }
 
             return NotFound(userRegisterDto);
@@ -60,20 +51,15 @@ namespace Easy.Hosts.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login(UserLoginDto userLoginDto, string returnUrl)
+        public async Task<IActionResult> Login([FromBody] UserLoginDto userLoginDto)
         {
-            if (ModelState.IsValid)
+            SignInResult result = await _signInManager.PasswordSignInAsync(userLoginDto.Email, userLoginDto.Password, userLoginDto.RememberMe, false);
+            if (result.Succeeded)
             {
-                var result = await _signInManager.PasswordSignInAsync(userLoginDto.Email, userLoginDto.Password, userLoginDto.RememberMe, false);
-                if (result.Succeeded)
-                {
-                    return Ok(result);
-                }
-
-                ModelState.AddModelError(string.Empty, "Login Inválido");
+              return Ok(result);
             }
 
-            return NotFound(returnUrl);
+            return NotFound();
         }
     }
 }
