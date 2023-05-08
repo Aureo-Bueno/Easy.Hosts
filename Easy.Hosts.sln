@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Easy.Hosts", "Easy.Hosts\Ea
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Easy.Hosts.Core", "Easy.Hosts.Core\Easy.Hosts.Core.csproj", "{431837C4-5F5D-49F8-B414-09F9D64C73EF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Easy.Hosts.Test", "Easy.Hosts.Test\Easy.Hosts.Test.csproj", "{B78EA916-1896-45AF-95F4-26F2AACE0D88}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Easy.Hosts.Test", "Easy.Hosts.Test\Easy.Hosts.Test.csproj", "{B78EA916-1896-45AF-95F4-26F2AACE0D88}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

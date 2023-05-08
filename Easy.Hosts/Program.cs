@@ -1,7 +1,7 @@
 using Easy.Hosts.Core.Domain;
 using Easy.Hosts.Core.Persistence.Context;
-using Easy.Hosts.Core.Service.Entities;
-using Easy.Hosts.Core.Service.Interface;
+using Easy.Hosts.Core.Repositories.Entities;
+using Easy.Hosts.Core.Repositories.Interface;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,14 +19,22 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder();
                  .AddEntityFrameworkStores<EasyHostsDbContext>()
                  .AddDefaultTokenProviders();
 
-    builder.Services.AddScoped<IBedroomService, BedroomService>();
-    builder.Services.AddScoped<IBookingService, BookingService>();
-    builder.Services.AddScoped<IEventService, EventService>();
-    builder.Services.AddScoped<IProductService, ProductService>();
-    builder.Services.AddScoped<ITypeBedroomService, TypeBedroomService>();
+    builder.Services.AddScoped<IBedroomRepository, BedroomRepository>();
+    builder.Services.AddScoped<IBookingRepository, BookingRepository>();
+    builder.Services.AddScoped<IEventRepository, EventRepository>();
+    builder.Services.AddScoped<IProductRepository, ProductRepository>();
+    builder.Services.AddScoped<ITypeBedroomRepository, TypeBedroomRepository>();
 
     builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-    builder.Services.AddCors();
+    builder.Services.AddCors(options =>
+    {
+        options.AddDefaultPolicy(builder =>
+        {
+            builder.AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader();
+        });
+    });
     builder.Services.AddControllers();
 
     builder.Services.Configure<IdentityOptions>(options =>
@@ -67,12 +75,7 @@ WebApplication app = builder.Build();
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "APISaudacao v1");
     });
 
-    app.UseCors(builder =>
-      builder
-        .AllowAnyOrigin()
-        .AllowAnyHeader()
-        .AllowAnyMethod()
-    );
+    app.UseCors();
 
     app.UseHttpsRedirection();
     app.UseRouting();

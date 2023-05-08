@@ -1,0 +1,22 @@
+version: '3.4'
+
+services:
+  easyhostsdb:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    environment:
+      SA_PASSWORD: "easyhosts@123"
+      ACCEPT_EULA: "Y"
+      MSSQL_PID: "Developer"
+    ports:
+      - "1433:1433"
+ 
+  mssqltools:
+    image: mcr.microsoft.com/mssql-tools
+    depends_on:
+      - sqlserver
+
+  easy.hosts:
+    image: ${DOCKER_REGISTRY-}easyhosts
+    build:
+      context: .
+      dockerfile: Easy.Hosts/Dockerfile
