@@ -1,0 +1,23 @@
+version: '3.4'
+
+services:
+  sqlserver:
+    container_name: easyhostsdb
+    hostname: 'sqlserver'
+    image: mcr.microsoft.com/mssql/server:2017-latest
+    environment:
+      - SA_PASSWORD=e@syhosts!
+      - ACCEPT_EULA=Y
+    ports:
+      - "5434:1433"
+    expose:
+      - 1433
+
+  easy.hosts:
+    container_name: easyhosts.api
+    image: ${DOCKER_REGISTRY-}easyhosts
+    build:
+      context: .
+      dockerfile: Easy.Hosts/Dockerfile
+    depends_on:
+      - sqlserver
