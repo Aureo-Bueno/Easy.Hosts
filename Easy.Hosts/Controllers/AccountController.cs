@@ -1,5 +1,7 @@
 ﻿using Easy.Hosts.Core.Domain;
 using Easy.Hosts.Core.DTOs.User;
+using Easy.Hosts.Core.Validators;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -26,24 +28,32 @@ namespace Easy.Hosts.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody]UserRegisterDto userRegisterDto)
         {
-            User user = new()
+            UserRegisterDtoValidator validator = new UserRegisterDtoValidator();
+
+            ValidationResult validateUser = await validator.ValidateAsync(userRegisterDto);
+
+            if (validateUser.IsValid)
             {
-               UserName = userRegisterDto.Email,
-               Email = userRegisterDto.Email,
-               Cpf = userRegisterDto.Cpf
-            };
+                User user = new()
+                {
+                    UserName = userRegisterDto.Email,
+                    Email = userRegisterDto.Email,
+                    Cpf = userRegisterDto.Cpf
+                };
 
-            IdentityResult result = await _userManager.CreateAsync(user, userRegisterDto.Password);
-            _logger.LogInformation($"User created! Info: {user.Email}, {DateTime.UtcNow}");
+
+                IdentityResult result = await _userManager.CreateAsync(user, userRegisterDto.Password);
+                _logger.LogInformation($"User created! Info: {user.Email}, {DateTime.UtcNow}");
 
 
-            if (result.Succeeded)
-            {
-                await _signInManager.SignInAsync(user, isPersistent: false);
-                return Ok(user);
+                if (result.Succeeded)
+                {
+                    await _signInManager.SignInAsync(user, isPersistent: false);
+                    return Ok(user);
+                }
             }
 
-            return NotFound(userRegisterDto);
+            return BadRequest(validateUser);
         }
 
         [HttpPost("logout")]

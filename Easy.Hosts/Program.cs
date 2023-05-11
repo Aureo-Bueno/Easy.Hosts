@@ -2,6 +2,8 @@ using Easy.Hosts.Core.Domain;
 using Easy.Hosts.Core.Persistence.Context;
 using Easy.Hosts.Core.Repositories.Entities;
 using Easy.Hosts.Core.Repositories.Interface;
+using FluentValidation.AspNetCore;
+using FluentValidation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
@@ -9,6 +11,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using System;
+using System.Reflection;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder();
 {
@@ -39,6 +42,9 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder();
         });
     });
     builder.Services.AddControllers();
+
+    builder.Services.AddFluentValidationAutoValidation();
+    builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
     builder.Services.Configure<IdentityOptions>(options =>
     {

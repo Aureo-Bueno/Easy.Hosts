@@ -62,3 +62,6 @@ C:\Users\User\Desktop\Easy.Hosts\bin\Debug\Easy.Hosts.Core.pdb
 C:\Users\User\Desktop\Easy.Hosts\obj\Debug\docker-compose.dcproj.AssemblyReference.cache
 C:\Users\User\Desktop\Easy.Hosts\obj\Debug\docker-compose.dcproj.CoreCompileInputs.cache
 C:\Users\User\Desktop\Easy.Hosts\obj\Debug\docker-compose.dcproj.CopyComplete
+C:\Users\User\Desktop\Easy.Hosts\bin\Debug\FluentValidation.dll
+C:\Users\User\Desktop\Easy.Hosts\bin\Debug\FluentValidation.AspNetCore.dll
+C:\Users\User\Desktop\Easy.Hosts\bin\Debug\FluentValidation.DependencyInjectionExtensions.dll

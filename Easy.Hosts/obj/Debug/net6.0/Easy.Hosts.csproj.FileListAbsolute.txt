@@ -227,3 +227,6 @@ C:\Users\User\Desktop\TG\Easy.Hosts\Easy.Hosts\obj\Debug\net6.0\refint\Easy.Host
 C:\Users\User\Desktop\TG\Easy.Hosts\Easy.Hosts\obj\Debug\net6.0\Easy.Hosts.pdb
 C:\Users\User\Desktop\TG\Easy.Hosts\Easy.Hosts\obj\Debug\net6.0\Easy.Hosts.genruntimeconfig.cache
 C:\Users\User\Desktop\TG\Easy.Hosts\Easy.Hosts\obj\Debug\net6.0\ref\Easy.Hosts.dll
+C:\Users\User\Desktop\Easy.Hosts\Easy.Hosts\bin\Debug\net6.0\FluentValidation.dll
+C:\Users\User\Desktop\Easy.Hosts\Easy.Hosts\bin\Debug\net6.0\FluentValidation.AspNetCore.dll
+C:\Users\User\Desktop\Easy.Hosts\Easy.Hosts\bin\Debug\net6.0\FluentValidation.DependencyInjectionExtensions.dll
