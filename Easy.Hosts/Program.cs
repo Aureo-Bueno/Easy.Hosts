@@ -6,11 +6,14 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using System;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder();
 {
+    builder.Logging.ClearProviders();
+    builder.Logging.AddConsole();
     builder.Services.AddDbContext<EasyHostsDbContext>();
 
     builder.Services.AddScoped<EasyHostsDbContext>();

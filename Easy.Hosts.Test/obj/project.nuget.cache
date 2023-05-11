@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "qbMsEuAtsjn7Qk4pGtnhXAM3zndpNp1sCxlOIRvVIlCul5R4IPcYgvYym0yket9yKEaGSi1PllUb3jP3K/p61A==",
+  "dgSpecHash": "vFlYNUFRGx/pxk+8Q1hl1WlVDTbFwFBGEolFbATjavlFqtmrNJ2L11DUHzqIZZd5piLqBrzSoPJif9FDpBzKyg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\User\\Desktop\\TG\\Easy.Hosts\\Easy.Hosts.Test\\Easy.Hosts.Test.csproj",
+  "projectFilePath": "C:\\Users\\User\\Desktop\\Easy.Hosts\\Easy.Hosts.Test\\Easy.Hosts.Test.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\User\\.nuget\\packages\\coverlet.collector\\3.1.2\\coverlet.collector.3.1.2.nupkg.sha512",
     "C:\\Users\\User\\.nuget\\packages\\microsoft.codecoverage\\17.3.2\\microsoft.codecoverage.17.3.2.nupkg.sha512",

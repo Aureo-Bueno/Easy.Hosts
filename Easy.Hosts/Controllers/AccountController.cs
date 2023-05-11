@@ -3,6 +3,7 @@ using Easy.Hosts.Core.DTOs.User;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Threading.Tasks;
 using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
 
@@ -14,8 +15,8 @@ namespace Easy.Hosts.Controllers
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
-        private readonly ILogger _logger;
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, ILogger logger)
+        private readonly ILogger<AccountController> _logger;
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, ILogger<AccountController> logger)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -33,11 +34,13 @@ namespace Easy.Hosts.Controllers
             };
 
             IdentityResult result = await _userManager.CreateAsync(user, userRegisterDto.Password);
+            _logger.LogInformation($"User created! Info: {user.Email}, {DateTime.UtcNow}");
+
 
             if (result.Succeeded)
             {
-               await _signInManager.SignInAsync(user, isPersistent: false);
-               return Ok(user);
+                await _signInManager.SignInAsync(user, isPersistent: false);
+                return Ok(user);
             }
 
             return NotFound(userRegisterDto);

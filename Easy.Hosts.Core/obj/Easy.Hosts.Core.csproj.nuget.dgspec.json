@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\User\\Desktop\\TG\\Easy.Hosts\\Easy.Hosts.Core\\Easy.Hosts.Core.csproj": {}
+    "C:\\Users\\User\\Desktop\\Easy.Hosts\\Easy.Hosts.Core\\Easy.Hosts.Core.csproj": {}
   },
   "projects": {
-    "C:\\Users\\User\\Desktop\\TG\\Easy.Hosts\\Easy.Hosts.Core\\Easy.Hosts.Core.csproj": {
+    "C:\\Users\\User\\Desktop\\Easy.Hosts\\Easy.Hosts.Core\\Easy.Hosts.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\User\\Desktop\\TG\\Easy.Hosts\\Easy.Hosts.Core\\Easy.Hosts.Core.csproj",
+        "projectUniqueName": "C:\\Users\\User\\Desktop\\Easy.Hosts\\Easy.Hosts.Core\\Easy.Hosts.Core.csproj",
         "projectName": "Easy.Hosts.Core",
-        "projectPath": "C:\\Users\\User\\Desktop\\TG\\Easy.Hosts\\Easy.Hosts.Core\\Easy.Hosts.Core.csproj",
+        "projectPath": "C:\\Users\\User\\Desktop\\Easy.Hosts\\Easy.Hosts.Core\\Easy.Hosts.Core.csproj",
         "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\User\\Desktop\\TG\\Easy.Hosts\\Easy.Hosts.Core\\obj\\",
+        "outputPath": "C:\\Users\\User\\Desktop\\Easy.Hosts\\Easy.Hosts.Core\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
