@@ -66,10 +66,18 @@ namespace Easy.Hosts.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] UserLoginDto userLoginDto)
         {
-            SignInResult result = await _signInManager.PasswordSignInAsync(userLoginDto.Email, userLoginDto.Password, userLoginDto.RememberMe, false);
-            if (result.Succeeded)
+            UserLoginDtoValidator validator = new UserLoginDtoValidator();
+
+            ValidationResult validateUser = await validator.ValidateAsync(userLoginDto);
+
+            if(validateUser.IsValid)
             {
-              return Ok(result);
+
+                SignInResult result = await _signInManager.PasswordSignInAsync(userLoginDto.Email, userLoginDto.Password, userLoginDto.RememberMe, false);
+                if (result.Succeeded)
+                {
+                    return Ok(result);
+                }
             }
 
             return NotFound();
