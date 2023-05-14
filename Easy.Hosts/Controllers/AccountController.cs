@@ -41,16 +41,24 @@ namespace Easy.Hosts.Controllers
                     Cpf = userRegisterDto.Cpf
                 };
 
+                User emailExists = await _userManager.FindByEmailAsync(userRegisterDto.Email.ToUpper());
 
-                IdentityResult result = await _userManager.CreateAsync(user, userRegisterDto.Password);
-                _logger.LogInformation($"User created! Info: {user.Email}, {DateTime.UtcNow}");
-
-
-                if (result.Succeeded)
+                if (emailExists is null)
                 {
-                    await _signInManager.SignInAsync(user, isPersistent: false);
-                    return Ok(user);
+                    IdentityResult result = await _userManager.CreateAsync(user, userRegisterDto.Password);
+                    _logger.LogInformation($"User created! Info: {user.Email}, {DateTime.UtcNow}");
+
+
+                    if (result.Succeeded)
+                    {
+                        await _signInManager.SignInAsync(user, isPersistent: false);
+                        return Ok(user);
+                    }
+                } else
+                {
+                    return BadRequest("Usuário já existente");
                 }
+               
             }
 
             return BadRequest(validateUser);
@@ -70,10 +78,11 @@ namespace Easy.Hosts.Controllers
 
             ValidationResult validateUser = await validator.ValidateAsync(userLoginDto);
 
+
             if(validateUser.IsValid)
             {
-
                 SignInResult result = await _signInManager.PasswordSignInAsync(userLoginDto.Email, userLoginDto.Password, userLoginDto.RememberMe, false);
+                
                 if (result.Succeeded)
                 {
                     return Ok(result);
@@ -81,6 +90,30 @@ namespace Easy.Hosts.Controllers
             }
 
             return NotFound();
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordDto changePasswordDto)
+        {
+            ChangePasswordDtoValidator validator = new ChangePasswordDtoValidator();
+
+            ValidationResult validateChangePassword = await validator.ValidateAsync(changePasswordDto);
+
+            if (validateChangePassword.IsValid)
+            {
+                User userId = await _userManager.FindByIdAsync(changePasswordDto.UserId);
+
+                IdentityResult result = await _userManager.ChangePasswordAsync(userId, changePasswordDto.CurrentPassword, changePasswordDto.NewPassword);
+
+                if (result.Succeeded)
+                {
+                    _logger.LogInformation($"Password updated! Info: {userId.Id}, {DateTime.UtcNow}");
+                    return Ok(result);
+                }
+
+            }
+
+            return BadRequest(validateChangePassword);
         }
     }
 }
