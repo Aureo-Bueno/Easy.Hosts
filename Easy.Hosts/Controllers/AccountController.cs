@@ -92,7 +92,7 @@ namespace Easy.Hosts.Controllers
             return NotFound();
         }
 
-        [HttpPut]
+        [HttpPut("changePassword")]
         public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordDto changePasswordDto)
         {
             ChangePasswordDtoValidator validator = new ChangePasswordDtoValidator();
