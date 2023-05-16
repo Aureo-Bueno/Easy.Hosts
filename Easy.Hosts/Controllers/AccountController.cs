@@ -78,7 +78,6 @@ namespace Easy.Hosts.Controllers
 
             ValidationResult validateUser = await validator.ValidateAsync(userLoginDto);
 
-
             if(validateUser.IsValid)
             {
                 SignInResult result = await _signInManager.PasswordSignInAsync(userLoginDto.Email, userLoginDto.Password, userLoginDto.RememberMe, false);
