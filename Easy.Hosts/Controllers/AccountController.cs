@@ -48,7 +48,6 @@ namespace Easy.Hosts.Controllers
                     IdentityResult result = await _userManager.CreateAsync(user, userRegisterDto.Password);
                     _logger.LogInformation($"User created! Info: {user.Email}, {DateTime.UtcNow}");
 
-
                     if (result.Succeeded)
                     {
                         await _signInManager.SignInAsync(user, isPersistent: false);
@@ -85,10 +84,13 @@ namespace Easy.Hosts.Controllers
                 if (result.Succeeded)
                 {
                     return Ok(result);
+                }else
+                {
+                    return NotFound(result);
                 }
             }
 
-            return NotFound();
+            return BadRequest(validateUser);
         }
 
         [HttpPut("changePassword")]
@@ -109,7 +111,10 @@ namespace Easy.Hosts.Controllers
                     _logger.LogInformation($"Password updated! Info: {userId.Id}, {DateTime.UtcNow}");
                     return Ok(result);
                 }
-
+                else
+                {
+                    return NotFound(result);
+                }
             }
 
             return BadRequest(validateChangePassword);
