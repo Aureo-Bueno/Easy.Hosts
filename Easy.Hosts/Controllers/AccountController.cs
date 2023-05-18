@@ -83,7 +83,8 @@ namespace Easy.Hosts.Controllers
                 
                 if (result.Succeeded)
                 {
-                    return Ok(result);
+                    User resultUser = await _userManager.FindByEmailAsync(userLoginDto.Email);
+                    return Ok(resultUser);
                 }else
                 {
                     return NotFound(result);
