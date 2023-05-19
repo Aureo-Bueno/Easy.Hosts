@@ -1,5 +1,6 @@
 ﻿using Easy.Hosts.Core.Domain;
 using Easy.Hosts.Core.DTOs.User;
+using Easy.Hosts.Core.Services.Interfaces;
 using Easy.Hosts.Core.Validators;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Identity;
@@ -15,14 +16,12 @@ namespace Easy.Hosts.Controllers
     [ApiController]
     public class AccountController : ControllerBase
     {
-        private readonly UserManager<User> _userManager;
-        private readonly SignInManager<User> _signInManager;
         private readonly ILogger<AccountController> _logger;
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, ILogger<AccountController> logger)
+        private readonly IAuthenticateService _authenticateService;
+        public AccountController(ILogger<AccountController> logger, IAuthenticateService authenticateService)
         {
-            _userManager = userManager;
-            _signInManager = signInManager;
             _logger = logger;
+            _authenticateService = authenticateService;
         }
 
         [HttpPost("register")]
@@ -34,32 +33,9 @@ namespace Easy.Hosts.Controllers
 
             if (validateUser.IsValid)
             {
-                User user = new()
-                {
-                    UserName = userRegisterDto.Email,
-                    Email = userRegisterDto.Email,
-                    Cpf = userRegisterDto.Cpf
-                };
-
-                User emailExists = await _userManager.FindByEmailAsync(userRegisterDto.Email.ToUpper());
-
-                if (emailExists is null)
-                {
-                    IdentityResult result = await _userManager.CreateAsync(user, userRegisterDto.Password);
-
-                    await _userManager.AddToRoleAsync(user, "Cliente");
-                    _logger.LogInformation($"User created! Info: {user.Email}, {DateTime.UtcNow}");
-
-                    if (result.Succeeded)
-                    {
-                        await _signInManager.SignInAsync(user, isPersistent: false);
-                        return Ok(user);
-                    }
-                } else
-                {
-                    return BadRequest("Usuário já existente");
-                }
-               
+                User result = await _authenticateService.RegisterUser(userRegisterDto);
+                _logger.LogInformation($"User created in {DateTime.Now}, email user: {result.Email}");
+                return Ok(result);
             }
 
             return BadRequest(validateUser);
@@ -68,7 +44,7 @@ namespace Easy.Hosts.Controllers
         [HttpPost("logout")]
         public async Task<IActionResult> Logout()
         {
-            await _signInManager.SignOutAsync();
+            await _authenticateService.Logout();
             return Ok();
         }
 
@@ -81,16 +57,9 @@ namespace Easy.Hosts.Controllers
 
             if(validateUser.IsValid)
             {
-                SignInResult result = await _signInManager.PasswordSignInAsync(userLoginDto.Email, userLoginDto.Password, userLoginDto.RememberMe, false);
-                
-                if (result.Succeeded)
-                {
-                    User resultUser = await _userManager.FindByEmailAsync(userLoginDto.Email);
-                    return Ok(resultUser);
-                }else
-                {
-                    return NotFound(result);
-                }
+                User result = await _authenticateService.Login(userLoginDto);
+                _logger.LogInformation($"User {result.UserName} authenticated");
+                return Ok(result);
             }
 
             return BadRequest(validateUser);
@@ -105,19 +74,10 @@ namespace Easy.Hosts.Controllers
 
             if (validateChangePassword.IsValid)
             {
-                User userId = await _userManager.FindByIdAsync(changePasswordDto.UserId);
+                User result = await _authenticateService.ChangePassowod(changePasswordDto);
+                _logger.LogInformation($"Password updated of user {result.UserName}, hour {DateTime.Now}");
+                return Ok(result);
 
-                IdentityResult result = await _userManager.ChangePasswordAsync(userId, changePasswordDto.CurrentPassword, changePasswordDto.NewPassword);
-
-                if (result.Succeeded)
-                {
-                    _logger.LogInformation($"Password updated! Info: {userId.Id}, {DateTime.UtcNow}");
-                    return Ok(result);
-                }
-                else
-                {
-                    return NotFound(result);
-                }
             }
 
             return BadRequest(validateChangePassword);

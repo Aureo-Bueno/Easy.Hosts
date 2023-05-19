@@ -12,6 +12,8 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Reflection;
+using Easy.Hosts.Core.Services.Interfaces;
+using Easy.Hosts.Core.Services.AuthenticationService;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder();
 {
@@ -30,6 +32,7 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder();
     builder.Services.AddScoped<IEventRepository, EventRepository>();
     builder.Services.AddScoped<IProductRepository, ProductRepository>();
     builder.Services.AddScoped<ITypeBedroomRepository, TypeBedroomRepository>();
+    builder.Services.AddScoped<IAuthenticateService, AuthenticateService>();
 
     builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
     builder.Services.AddCors(options =>

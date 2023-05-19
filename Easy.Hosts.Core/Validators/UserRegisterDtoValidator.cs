@@ -16,6 +16,13 @@ namespace Easy.Hosts.Core.Validators
                 .Length(8, 100)
                 .NotEmpty()
                 .WithMessage("Dever ter no mínimo 8 caracteres e caracteres especiais");
+            RuleFor(userRegister => userRegister.ConfirmPassword)
+                .Length(8, 100)
+                .Matches(userRegister => userRegister.Password)
+                .WithMessage("Senhas devem ser Iguais");
+            RuleFor(userRegister => userRegister.RoleName)
+                .NotEmpty()
+                .WithMessage("Role Inválida");
         }
     }
 }
