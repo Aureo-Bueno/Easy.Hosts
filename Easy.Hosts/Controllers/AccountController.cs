@@ -46,6 +46,8 @@ namespace Easy.Hosts.Controllers
                 if (emailExists is null)
                 {
                     IdentityResult result = await _userManager.CreateAsync(user, userRegisterDto.Password);
+
+                    await _userManager.AddToRoleAsync(user, "Cliente");
                     _logger.LogInformation($"User created! Info: {user.Email}, {DateTime.UtcNow}");
 
                     if (result.Succeeded)
