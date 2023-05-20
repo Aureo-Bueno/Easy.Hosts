@@ -2,6 +2,8 @@
 using Easy.Hosts.Core.DTOs.OrderService;
 using Easy.Hosts.Core.Persistence.Context;
 using Easy.Hosts.Core.Repositories.Interface;
+using Easy.Hosts.Core.Validators.OrderService;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -41,13 +43,22 @@ namespace Easy.Hosts.Controllers
         [HttpPost]
         public async Task<IActionResult> Insert([FromBody] OrderServiceCreateDto orderServiceCreateDto)
         {
-            OrderServiceReadDto result = await _orderServiceRepository.InsertAsync(orderServiceCreateDto);
+            OrderServiceCreateDtoValidator validator = new();
 
-            return Ok(result);
+            ValidationResult validate = await validator.ValidateAsync(orderServiceCreateDto);
+
+            if (validate.IsValid)
+            {
+                OrderServiceReadDto result = await _orderServiceRepository.InsertAsync(orderServiceCreateDto);
+
+                return Ok(result);
+            }
+
+            return BadRequest(validate.Errors);
         }
 
         [HttpPut]
-        public async Task<IActionResult> Update([FromBody]Guid id, OrderServiceUpdateDto orderServiceUpdateDto)
+        public async Task<IActionResult> Update(Guid id, OrderServiceUpdateDto orderServiceUpdateDto)
         {
             OrderServiceReadDto result = await _orderServiceRepository.UpdateAsync(id, orderServiceUpdateDto);
             return Ok(result);

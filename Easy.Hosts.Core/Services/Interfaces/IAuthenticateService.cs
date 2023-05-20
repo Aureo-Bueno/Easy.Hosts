@@ -7,9 +7,8 @@ namespace Easy.Hosts.Core.Services.Interfaces
 {
     public interface IAuthenticateService
     {
-        Task<User> RegisterUser(UserRegisterDto userRegisterDto);
         Task Logout();
-        Task<User> Login(UserLoginDto userLoginDto);
-        Task<User> ChangePassowod(ChangePasswordDto changePasswordDto);
+        Task<UserIdentity> Login(UserLoginDto userLoginDto);
+        Task<UserIdentity> ChangePassowod(ChangePasswordDto changePasswordDto);
     }
 }

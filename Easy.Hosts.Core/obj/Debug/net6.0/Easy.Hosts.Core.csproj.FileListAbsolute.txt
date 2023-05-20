@@ -26,8 +26,17 @@ C:\Users\User\Desktop\TG\Easy.Hosts\Easy.Hosts.Core\obj\Debug\net6.0\refint\Easy
 C:\Users\User\Desktop\TG\Easy.Hosts\Easy.Hosts.Core\obj\Debug\net6.0\Easy.Hosts.Core.pdb
 C:\Users\User\Desktop\TG\Easy.Hosts\Easy.Hosts.Core\obj\Debug\net6.0\Easy.Hosts.Core.genruntimeconfig.cache
 C:\Users\User\Desktop\TG\Easy.Hosts\Easy.Hosts.Core\obj\Debug\net6.0\ref\Easy.Hosts.Core.dll
+C:\Users\User\Desktop\Easy.Hosts\Easy.Hosts.Core\bin\Debug\net6.0\Easy.Hosts.Core.deps.json
+C:\Users\User\Desktop\Easy.Hosts\Easy.Hosts.Core\bin\Debug\net6.0\Easy.Hosts.Core.runtimeconfig.json
+C:\Users\User\Desktop\Easy.Hosts\Easy.Hosts.Core\bin\Debug\net6.0\Easy.Hosts.Core.dll
+C:\Users\User\Desktop\Easy.Hosts\Easy.Hosts.Core\bin\Debug\net6.0\Easy.Hosts.Core.pdb
 C:\Users\User\Desktop\Easy.Hosts\Easy.Hosts.Core\obj\Debug\net6.0\Easy.Hosts.Core.csproj.AssemblyReference.cache
 C:\Users\User\Desktop\Easy.Hosts\Easy.Hosts.Core\obj\Debug\net6.0\Easy.Hosts.Core.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\User\Desktop\Easy.Hosts\Easy.Hosts.Core\obj\Debug\net6.0\Easy.Hosts.Core.AssemblyInfoInputs.cache
 C:\Users\User\Desktop\Easy.Hosts\Easy.Hosts.Core\obj\Debug\net6.0\Easy.Hosts.Core.AssemblyInfo.cs
 C:\Users\User\Desktop\Easy.Hosts\Easy.Hosts.Core\obj\Debug\net6.0\Easy.Hosts.Core.csproj.CoreCompileInputs.cache
+C:\Users\User\Desktop\Easy.Hosts\Easy.Hosts.Core\obj\Debug\net6.0\Easy.Hosts.Core.dll
+C:\Users\User\Desktop\Easy.Hosts\Easy.Hosts.Core\obj\Debug\net6.0\refint\Easy.Hosts.Core.dll
+C:\Users\User\Desktop\Easy.Hosts\Easy.Hosts.Core\obj\Debug\net6.0\Easy.Hosts.Core.pdb
+C:\Users\User\Desktop\Easy.Hosts\Easy.Hosts.Core\obj\Debug\net6.0\Easy.Hosts.Core.genruntimeconfig.cache
+C:\Users\User\Desktop\Easy.Hosts\Easy.Hosts.Core\obj\Debug\net6.0\ref\Easy.Hosts.Core.dll

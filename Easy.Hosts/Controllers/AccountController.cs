@@ -24,23 +24,6 @@ namespace Easy.Hosts.Controllers
             _authenticateService = authenticateService;
         }
 
-        [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody]UserRegisterDto userRegisterDto)
-        {
-            UserRegisterDtoValidator validator = new UserRegisterDtoValidator();
-
-            ValidationResult validateUser = await validator.ValidateAsync(userRegisterDto);
-
-            if (validateUser.IsValid)
-            {
-                User result = await _authenticateService.RegisterUser(userRegisterDto);
-                _logger.LogInformation($"User created in {DateTime.Now}, email user: {result.Email}");
-                return Ok(result);
-            }
-
-            return BadRequest(validateUser);
-        }
-
         [HttpPost("logout")]
         public async Task<IActionResult> Logout()
         {
@@ -57,7 +40,7 @@ namespace Easy.Hosts.Controllers
 
             if(validateUser.IsValid)
             {
-                User result = await _authenticateService.Login(userLoginDto);
+                UserIdentity result = await _authenticateService.Login(userLoginDto);
                 _logger.LogInformation($"User {result.UserName} authenticated");
                 return Ok(result);
             }
@@ -74,7 +57,7 @@ namespace Easy.Hosts.Controllers
 
             if (validateChangePassword.IsValid)
             {
-                User result = await _authenticateService.ChangePassowod(changePasswordDto);
+                UserIdentity result = await _authenticateService.ChangePassowod(changePasswordDto);
                 _logger.LogInformation($"Password updated of user {result.UserName}, hour {DateTime.Now}");
                 return Ok(result);
 

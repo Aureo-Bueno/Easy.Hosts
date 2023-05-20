@@ -14,6 +14,7 @@ using System;
 using System.Reflection;
 using Easy.Hosts.Core.Services.Interfaces;
 using Easy.Hosts.Core.Services.AuthenticationService;
+using Easy.Hosts.Core.Services.User;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder();
 {
@@ -23,7 +24,7 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder();
 
     builder.Services.AddScoped<EasyHostsDbContext>();
 
-    builder.Services.AddIdentity<User, IdentityRole>()
+    builder.Services.AddIdentity<UserIdentity, IdentityRole>()
                  .AddEntityFrameworkStores<EasyHostsDbContext>()
                  .AddDefaultTokenProviders();
 
@@ -38,6 +39,7 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder();
 
     //ADD SCOPED SERVICES
     builder.Services.AddScoped<IAuthenticateService, AuthenticateService>();
+    builder.Services.AddScoped<IUserService, UserService>();
 
     // ADD AUTOMAPPER
     builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());

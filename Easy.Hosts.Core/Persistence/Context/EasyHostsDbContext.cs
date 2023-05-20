@@ -8,7 +8,7 @@ using System.Reflection;
 
 namespace Easy.Hosts.Core.Persistence.Context
 {
-    public class EasyHostsDbContext: IdentityDbContext<User, IdentityRole, string>
+    public class EasyHostsDbContext: IdentityDbContext<UserIdentity, IdentityRole, string>
     {
         protected readonly IConfiguration Configuration;
         public EasyHostsDbContext(DbContextOptions<EasyHostsDbContext> options, IConfiguration configuration) : base(options)

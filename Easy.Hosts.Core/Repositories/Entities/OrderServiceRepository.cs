@@ -2,8 +2,10 @@
 using Easy.Hosts.Core.Domain;
 using Easy.Hosts.Core.DTOs.Bedroom;
 using Easy.Hosts.Core.DTOs.OrderService;
+using Easy.Hosts.Core.DTOs.User;
 using Easy.Hosts.Core.Persistence.Context;
 using Easy.Hosts.Core.Repositories.Interface;
+using Easy.Hosts.Core.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -15,14 +17,18 @@ namespace Easy.Hosts.Core.Repositories.Entities
     {
         private readonly EasyHostsDbContext _context;
         private readonly IMapper _mapper;
-        public OrderServiceRepository(EasyHostsDbContext context, IMapper mapper)
+        private readonly IUserService _userService;
+        public OrderServiceRepository(EasyHostsDbContext context, IMapper mapper, IUserService userService)
         {
             _context = context;
             _mapper = mapper;
+            _userService = userService;
         }
 
         public async Task<OrderServiceReadDto> InsertAsync(OrderServiceCreateDto orderServiceCreateDto)
         {
+            UserReadDto userReadDto = await _userService.GetUserByIdAsync(orderServiceCreateDto.UserId.ToString());
+
             OrderService orderService = new()
             {
                 Id = Guid.NewGuid(),
@@ -30,7 +36,7 @@ namespace Easy.Hosts.Core.Repositories.Entities
                 EmployeeId = orderServiceCreateDto.EmployeeId,
                 Status = orderServiceCreateDto.Status,
                 Type = orderServiceCreateDto.Type,
-                UserId = orderServiceCreateDto.UserId,
+                UserId = Guid.Parse(userReadDto.Id),
                 CreatedAt = DateTime.UtcNow,
                 UpdatedAt = DateTime.UtcNow,
             };
