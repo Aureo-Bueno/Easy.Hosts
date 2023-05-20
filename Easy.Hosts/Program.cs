@@ -27,14 +27,21 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder();
                  .AddEntityFrameworkStores<EasyHostsDbContext>()
                  .AddDefaultTokenProviders();
 
+    //ADD SCOPED REPOSITORIES
     builder.Services.AddScoped<IBedroomRepository, BedroomRepository>();
     builder.Services.AddScoped<IBookingRepository, BookingRepository>();
     builder.Services.AddScoped<IEventRepository, EventRepository>();
     builder.Services.AddScoped<IProductRepository, ProductRepository>();
     builder.Services.AddScoped<ITypeBedroomRepository, TypeBedroomRepository>();
+    builder.Services.AddScoped<IOrderServiceRepository, OrderServiceRepository>();
+
+
+    //ADD SCOPED SERVICES
     builder.Services.AddScoped<IAuthenticateService, AuthenticateService>();
 
+    // ADD AUTOMAPPER
     builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+    
     builder.Services.AddCors(options =>
     {
         options.AddDefaultPolicy(builder =>
@@ -44,6 +51,7 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder();
                 .AllowAnyHeader();
         });
     });
+
     builder.Services.AddControllers();
 
     builder.Services.AddFluentValidationAutoValidation();

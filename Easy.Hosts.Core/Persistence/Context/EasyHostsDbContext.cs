@@ -38,5 +38,6 @@ namespace Easy.Hosts.Core.Persistence.Context
         public DbSet<Event> Event { get; set; }
         public DbSet<TypeBedroom> TypeBedroom { get; set; }
         public DbSet<Product> Product { get; set; }
+        public DbSet<OrderService> OrderService { get; set; }
     }
 }

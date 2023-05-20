@@ -4,6 +4,7 @@ using Easy.Hosts.Core.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Easy.Hosts.Core.Migrations
 {
     [DbContext(typeof(EasyHostsDbContext))]
-    partial class EasyHostsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230519232825_AddTableOrderService")]
+    partial class AddTableOrderService
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
