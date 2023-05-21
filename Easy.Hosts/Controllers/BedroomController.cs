@@ -2,6 +2,8 @@
 using Easy.Hosts.Core.DTOs.Bedroom;
 using Easy.Hosts.Core.Events;
 using Easy.Hosts.Core.Repositories.Interface;
+using Easy.Hosts.Core.Validators.Bedroom;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -22,6 +24,17 @@ namespace Easy.Hosts.Controllers
             _logger = logger;
         }
 
+        [HttpGet("id:guid")]
+        public async Task<IActionResult> GetAll()
+        {
+            IEnumerable<BedroomReadDto> results = await _bedroomRepository.FindAllAsync();
+
+            foreach (var item in results)
+                _logger.LogWarning(MyLogEvents.GetItem, $"Get Bedroom Id: ({item.Id})");
+
+            return results is not null ? Ok(results) : NotFound();
+        }
+
         [HttpGet("{id:guid}")]
         public async Task<IActionResult> GetById(Guid id)
         {
@@ -33,22 +46,38 @@ namespace Easy.Hosts.Controllers
         [HttpPost]
         public async Task<IActionResult> Insert([FromBody] BedroomCreateDto bedroomCreateDto)
         {
-            BedroomReadDto result = await _bedroomRepository.InsertAsync(bedroomCreateDto);
+            BedroomCreateDtoValidator validator = new();
 
-            _logger.LogWarning(MyLogEvents.InsertItem, $"Insert Bedroom item: {result.Id}, {result.Name}");
+            ValidationResult validate = await validator.ValidateAsync(bedroomCreateDto);
 
-            return result is not null ? Ok(result) : NoContent();
+            if (validate.IsValid)
+            {
+                BedroomReadDto result = await _bedroomRepository.InsertAsync(bedroomCreateDto);
+
+                _logger.LogWarning(MyLogEvents.InsertItem, $"Insert Bedroom item: {result.Id}, {result.Name}");
+
+                return Ok(result);
+            }
+
+            return BadRequest(validate.Errors);
+          
         }
 
-        [HttpGet()]
-        public async Task<IActionResult> GetAll()
+        [HttpPut("{id:guid}")]
+        public async Task<IActionResult> Update([FromBody] BedroomUpdateDto bedroomUpdateDto,Guid id)
         {
-            IEnumerable<BedroomReadDto> results = await _bedroomRepository.FindAllAsync();
+            BedroomUpdateDtoValidator validator = new();
 
-            foreach (var item in results)
-                _logger.LogWarning(MyLogEvents.GetItem, $"Get Bedroom Id: ({item.Id})");
+            ValidationResult validate = await validator.ValidateAsync(bedroomUpdateDto);
 
-            return results is not null ? Ok(results) : NotFound();
+            if (validate.IsValid)
+            {
+                BedroomReadDto result = await _bedroomRepository.UpdateAsync(id, bedroomUpdateDto);
+                _logger.LogWarning(MyLogEvents.UpdateItem, $"Updated Bedroom Id: ({id})");
+                return Ok(result);
+            }
+
+            return BadRequest(validate.Errors);
         }
 
         [HttpDelete("{id:guid}")]
@@ -57,14 +86,6 @@ namespace Easy.Hosts.Controllers
             bool result = await _bedroomRepository.DeleteAsync(id);
             _logger.LogWarning(MyLogEvents.DeleteItem, $"Deleted Bedroom Id: ({id})");
             return result ? Ok() : NotFound();
-        }
-
-        [HttpPut("{id:guid}")]
-        public async Task<IActionResult> Update([FromBody] BedroomUpdateDto bedroomUpdateDto,Guid id)
-        {
-            BedroomReadDto result = await _bedroomRepository.UpdateAsync(id, bedroomUpdateDto);
-            _logger.LogWarning(MyLogEvents.UpdateItem, $"Updated Bedroom Id: ({id})");
-            return result is not null ? Ok(result) : NotFound();
         }
     }
 }

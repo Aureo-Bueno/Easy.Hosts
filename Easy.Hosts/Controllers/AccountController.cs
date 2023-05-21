@@ -1,5 +1,6 @@
 ﻿using Easy.Hosts.Core.Domain;
 using Easy.Hosts.Core.DTOs.User;
+using Easy.Hosts.Core.Events;
 using Easy.Hosts.Core.Services.Interfaces;
 using Easy.Hosts.Core.Validators;
 using FluentValidation.Results;
@@ -41,7 +42,7 @@ namespace Easy.Hosts.Controllers
             if(validateUser.IsValid)
             {
                 UserIdentity result = await _authenticateService.Login(userLoginDto);
-                _logger.LogInformation($"User {result.UserName} authenticated");
+                _logger.LogInformation(MyLogEvents.GetItem,$"User {result.UserName} authenticated");
                 return Ok(result);
             }
 
@@ -58,7 +59,7 @@ namespace Easy.Hosts.Controllers
             if (validateChangePassword.IsValid)
             {
                 UserIdentity result = await _authenticateService.ChangePassowod(changePasswordDto);
-                _logger.LogInformation($"Password updated of user {result.UserName}, hour {DateTime.Now}");
+                _logger.LogInformation(MyLogEvents.UpdateItem,$"Password updated of user {result.UserName}, hour {DateTime.Now}");
                 return Ok(result);
 
             }

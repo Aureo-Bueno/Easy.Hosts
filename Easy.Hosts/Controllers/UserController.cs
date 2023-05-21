@@ -25,7 +25,7 @@ namespace Easy.Hosts.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Register([FromBody] UserRegisterDto userRegisterDto)
+        public async Task<IActionResult> Insert([FromBody] UserRegisterDto userRegisterDto)
         {
             UserRegisterDtoValidator validator = new UserRegisterDtoValidator();
 
@@ -42,7 +42,7 @@ namespace Easy.Hosts.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get() 
+        public async Task<IActionResult> GetAll() 
         {
             List<UserReadDto> result = await _userService.GetAllUserAsync();
 

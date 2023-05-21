@@ -24,7 +24,7 @@ namespace Easy.Hosts.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> GetAll()
         {
             List<IdentityRole> roles = await _roleManager.Roles.ToListAsync();
             return Ok(roles);

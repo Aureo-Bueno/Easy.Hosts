@@ -1,5 +1,6 @@
 ﻿using Easy.Hosts.Core.Domain;
 using Easy.Hosts.Core.DTOs.OrderService;
+using Easy.Hosts.Core.Events;
 using Easy.Hosts.Core.Persistence.Context;
 using Easy.Hosts.Core.Repositories.Interface;
 using Easy.Hosts.Core.Validators.OrderService;
@@ -30,6 +31,7 @@ namespace Easy.Hosts.Controllers
         public async Task<IActionResult> Get()
         {
             IEnumerable<OrderServiceReadDto> result = await _orderServiceRepository.FindAllAsync();
+            _logger.LogInformation(MyLogEvents.GetItem, "Get all Order Services");
             return Ok(result);
         }
 
@@ -37,6 +39,7 @@ namespace Easy.Hosts.Controllers
         public async Task<IActionResult> GetById(Guid id)
         {
             OrderServiceReadDto result = await _orderServiceRepository.GetByIdAsync(id);
+            _logger.LogInformation(MyLogEvents.GetItem, $"Get Oder Service, Id: {id}");
             return Ok(result);
         }
 
@@ -50,7 +53,7 @@ namespace Easy.Hosts.Controllers
             if (validate.IsValid)
             {
                 OrderServiceReadDto result = await _orderServiceRepository.InsertAsync(orderServiceCreateDto);
-
+                _logger.LogInformation(MyLogEvents.InsertItem, $"Insert Order Service, Description {result.Description}");
                 return Ok(result);
             }
 
@@ -60,8 +63,17 @@ namespace Easy.Hosts.Controllers
         [HttpPut]
         public async Task<IActionResult> Update(Guid id, OrderServiceUpdateDto orderServiceUpdateDto)
         {
-            OrderServiceReadDto result = await _orderServiceRepository.UpdateAsync(id, orderServiceUpdateDto);
-            return Ok(result);
+            OrderServiceUpdateDtoValidator validator = new();
+            ValidationResult validate = await validator.ValidateAsync(orderServiceUpdateDto);
+
+            if (validate.IsValid) 
+            {
+                OrderServiceReadDto result = await _orderServiceRepository.UpdateAsync(id, orderServiceUpdateDto);
+                _logger.LogInformation(MyLogEvents.UpdateItem, $"Update Order Service, Id: {id}.");
+                return Ok(result);
+            }
+            
+            return BadRequest(validate.Errors);
         }
 
         [HttpDelete("id:guid")]

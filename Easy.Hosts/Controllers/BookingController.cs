@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Easy.Hosts.Controllers
 {
@@ -9,36 +9,34 @@ namespace Easy.Hosts.Controllers
     [Authorize]
     public class BookingController : ControllerBase
     {
-        // GET: api/<BookingController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<IActionResult> GetAll()
         {
-            return new string[] { "value1", "value2" };
+            return Ok();
         }
 
-        // GET api/<BookingController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet("id:guid")]
+        public async Task<IActionResult> GetById()
         {
-            return "value";
+            return Ok();
         }
 
-        // POST api/<BookingController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<IActionResult> Insert()
         {
+            return Ok();
         }
 
-        // PUT api/<BookingController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut("id:guid")]
+        public async Task<IActionResult> Update()
         {
+            return Ok();
         }
 
-        // DELETE api/<BookingController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete("id:guid")]
+        public async Task<IActionResult> Delete()
         {
+            return Ok();
         }
     }
 }
