@@ -1,5 +1,5 @@
 ﻿using Easy.Hosts.Core.Domain;
-using Easy.Hosts.Core.DTOs.Bedroom;
+using Easy.Hosts.Core.DTOs.BedroomDto;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;

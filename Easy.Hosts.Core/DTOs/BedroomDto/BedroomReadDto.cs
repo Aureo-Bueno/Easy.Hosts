@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Easy.Hosts.Core.DTOs.Bedroom
+namespace Easy.Hosts.Core.DTOs.BedroomDto
 {
     public class BedroomReadDto
     {

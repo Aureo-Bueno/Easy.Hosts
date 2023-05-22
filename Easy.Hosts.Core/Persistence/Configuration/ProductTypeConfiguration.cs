@@ -14,6 +14,12 @@ namespace Easy.Hosts.Core.Persistence.Configuration
                 .HasColumnName("PRODUCT_ID");
 
             builder.HasKey(p => p.Id);
+
+            builder.Property(p => p.CreatedAt)
+               .HasColumnName("CREATED_AT");
+
+            builder.Property(p => p.UpdatedAt)
+                .HasColumnName("UPDATED_AT");
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿using Easy.Hosts.Core.Domain;
-using Easy.Hosts.Core.DTOs.Bedroom;
+using Easy.Hosts.Core.DTOs.BedroomDto;
 using Easy.Hosts.Core.Events;
 using Easy.Hosts.Core.Repositories.Interface;
 using Easy.Hosts.Core.Validators.Bedroom;
@@ -24,7 +24,7 @@ namespace Easy.Hosts.Controllers
             _logger = logger;
         }
 
-        [HttpGet("id:guid")]
+        [HttpGet]
         public async Task<IActionResult> GetAll()
         {
             IEnumerable<BedroomReadDto> results = await _bedroomRepository.FindAllAsync();
@@ -36,7 +36,7 @@ namespace Easy.Hosts.Controllers
         }
 
         [HttpGet("{id:guid}")]
-        public async Task<IActionResult> GetById(Guid id)
+        public async Task<IActionResult> GetById([FromRoute] Guid id)
         {
             BedroomReadDto result = await _bedroomRepository.GetByIdAsync(id);
             _logger.LogWarning(MyLogEvents.GetItem, $"Get Bedroom Id: ({id})");

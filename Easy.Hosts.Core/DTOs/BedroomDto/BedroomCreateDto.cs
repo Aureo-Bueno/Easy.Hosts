@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Easy.Hosts.Core.DTOs.Bedroom
+namespace Easy.Hosts.Core.DTOs.BedroomDto
 {
     public class BedroomCreateDto
     {

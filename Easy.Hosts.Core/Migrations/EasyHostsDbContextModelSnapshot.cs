@@ -57,17 +57,48 @@ namespace Easy.Hosts.Core.Migrations
             modelBuilder.Entity("Easy.Hosts.Core.Domain.Booking", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("BOOKING_ID");
 
+                    b.Property<string>("BedroomId")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("BEDROOM_ID");
+
+                    b.Property<DateTime>("Checkin")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("CHECKIN");
+
+                    b.Property<DateTime>("Checkout")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("CHECKOUT");
+
+                    b.Property<string>("CodeBooking")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("CODE_BOOKING");
+
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime2")
+                        .HasColumnName("CREATED_AT");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int")
+                        .HasColumnName("STATUS");
+
+                    b.Property<decimal>("TotalValue")
+                        .HasColumnType("decimal(18,2)")
+                        .HasColumnName("TOTAL_VALUE");
 
                     b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime2")
+                        .HasColumnName("UPDATED_AT");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnName("USER_ID");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("TB_BOOKING", (string)null);
                 });
@@ -80,10 +111,12 @@ namespace Easy.Hosts.Core.Migrations
                         .HasColumnName("EVENT_ID");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime2")
+                        .HasColumnName("CREATED_AT");
 
                     b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime2")
+                        .HasColumnName("UPDATED_AT");
 
                     b.HasKey("Id");
 
@@ -141,10 +174,12 @@ namespace Easy.Hosts.Core.Migrations
                         .HasColumnName("PRODUCT_ID");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime2")
+                        .HasColumnName("CREATED_AT");
 
                     b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime2")
+                        .HasColumnName("UPDATED_AT");
 
                     b.HasKey("Id");
 
@@ -159,17 +194,19 @@ namespace Easy.Hosts.Core.Migrations
                         .HasColumnName("TYPE_BEDROOM_ID");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime2")
+                        .HasColumnName("CREATED_AT");
 
                     b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime2")
+                        .HasColumnName("UPDATED_AT");
 
                     b.HasKey("Id");
 
                     b.ToTable("TB_TYPE_BEDROOM", (string)null);
                 });
 
-            modelBuilder.Entity("Easy.Hosts.Core.Domain.User", b =>
+            modelBuilder.Entity("Easy.Hosts.Core.Domain.UserIdentity", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -370,6 +407,24 @@ namespace Easy.Hosts.Core.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Easy.Hosts.Core.Domain.Booking", b =>
+                {
+                    b.HasOne("Easy.Hosts.Core.Domain.Bedroom", "Bedroom")
+                        .WithOne("Booking")
+                        .HasForeignKey("Easy.Hosts.Core.Domain.Booking", "Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Easy.Hosts.Core.Domain.UserIdentity", "User")
+                        .WithMany("Booking")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("Bedroom");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Easy.Hosts.Core.Domain.Product", b =>
                 {
                     b.HasOne("Easy.Hosts.Core.Domain.OrderService", "OrderService")
@@ -392,7 +447,7 @@ namespace Easy.Hosts.Core.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("Easy.Hosts.Core.Domain.User", null)
+                    b.HasOne("Easy.Hosts.Core.Domain.UserIdentity", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -401,7 +456,7 @@ namespace Easy.Hosts.Core.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("Easy.Hosts.Core.Domain.User", null)
+                    b.HasOne("Easy.Hosts.Core.Domain.UserIdentity", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -416,7 +471,7 @@ namespace Easy.Hosts.Core.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Easy.Hosts.Core.Domain.User", null)
+                    b.HasOne("Easy.Hosts.Core.Domain.UserIdentity", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -425,16 +480,26 @@ namespace Easy.Hosts.Core.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("Easy.Hosts.Core.Domain.User", null)
+                    b.HasOne("Easy.Hosts.Core.Domain.UserIdentity", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Easy.Hosts.Core.Domain.Bedroom", b =>
+                {
+                    b.Navigation("Booking");
+                });
+
             modelBuilder.Entity("Easy.Hosts.Core.Domain.OrderService", b =>
                 {
                     b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("Easy.Hosts.Core.Domain.UserIdentity", b =>
+                {
+                    b.Navigation("Booking");
                 });
 #pragma warning restore 612, 618
         }

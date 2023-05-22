@@ -1,5 +1,5 @@
 ﻿
-using Easy.Hosts.Core.DTOs.Bedroom;
+using Easy.Hosts.Core.DTOs.BedroomDto;
 using FluentValidation;
 
 namespace Easy.Hosts.Core.Validators.Bedroom

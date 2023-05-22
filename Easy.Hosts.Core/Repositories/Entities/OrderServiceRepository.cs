@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Easy.Hosts.Core.Domain;
-using Easy.Hosts.Core.DTOs.Bedroom;
+using Easy.Hosts.Core.DTOs.BedroomDto;
 using Easy.Hosts.Core.DTOs.OrderService;
 using Easy.Hosts.Core.DTOs.User;
 using Easy.Hosts.Core.Persistence.Context;

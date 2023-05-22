@@ -6,5 +6,6 @@ namespace Easy.Hosts.Core.Domain
     {
         public string Name { get; set; }
         public int Number { get; set; }
+        public Booking Booking { get; set; }
     }
 }

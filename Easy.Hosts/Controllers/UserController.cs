@@ -50,7 +50,7 @@ namespace Easy.Hosts.Controllers
         }
 
         [HttpGet("id:string")]
-        public async Task<IActionResult> GetId(string id)
+        public async Task<IActionResult> GetId([FromRoute] string id)
         {
             UserReadDto result = await _userService.GetUserByIdAsync(id);
 

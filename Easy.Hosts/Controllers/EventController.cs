@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 
 namespace Easy.Hosts.Controllers
@@ -16,7 +17,7 @@ namespace Easy.Hosts.Controllers
         }
 
         [HttpGet("id:guid")]
-        public async Task<IActionResult> GetById()
+        public async Task<IActionResult> GetById([FromRoute] Guid id)
         {
             return Ok();
         }

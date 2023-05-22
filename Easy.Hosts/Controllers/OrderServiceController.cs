@@ -36,7 +36,7 @@ namespace Easy.Hosts.Controllers
         }
 
         [HttpGet("{id:guid}")]
-        public async Task<IActionResult> GetById(Guid id)
+        public async Task<IActionResult> GetById([FromRoute] Guid id)
         {
             OrderServiceReadDto result = await _orderServiceRepository.GetByIdAsync(id);
             _logger.LogInformation(MyLogEvents.GetItem, $"Get Oder Service, Id: {id}");
