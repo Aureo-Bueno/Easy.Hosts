@@ -1,7 +1,8 @@
 ﻿using Easy.Hosts.Core.DTOs.Booking;
 using Easy.Hosts.Core.Events;
 using Easy.Hosts.Core.Repositories.Interface;
-using Microsoft.AspNetCore.Authorization;
+using Easy.Hosts.Core.Validators.Booking;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
@@ -43,8 +44,17 @@ namespace Easy.Hosts.Controllers
         [HttpPost]
         public async Task<IActionResult> Insert([FromBody] BookingCreateDto bookingCreatedDto)
         {
-            await _bookingRepository.InsertAsync(bookingCreatedDto);
-            return Ok();
+            BookingCreateDtoValidator validator = new();
+            ValidationResult validate = await validator.ValidateAsync(bookingCreatedDto);
+
+            if (validate.IsValid) 
+            {
+                await _bookingRepository.InsertAsync(bookingCreatedDto);
+                _logger.LogInformation(MyLogEvents.InsertItem, $"Inserted Booking");
+                return Ok();
+            }
+
+            return BadRequest(validate.Errors);
         }
 
         [HttpPut("id:guid")]

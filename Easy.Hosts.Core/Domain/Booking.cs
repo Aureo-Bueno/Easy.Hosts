@@ -13,7 +13,7 @@ namespace Easy.Hosts.Core.Domain
         public DateTime Checkout { get; set; }
         public string UserId { get; set; }
         public UserIdentity User { get; set; }
-        public string BedroomId { get; set; }
+        public Guid BedroomId { get; set; }
         public virtual Bedroom Bedroom { get; set; }
     }
 }

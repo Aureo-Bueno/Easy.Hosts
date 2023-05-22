@@ -41,13 +41,12 @@ namespace Easy.Hosts.Core.Persistence.Configuration
             builder.Property(p => p.UserId)
                .HasColumnName("USER_ID");
 
-            builder.HasOne<UserIdentity>(p => p.User)
+            builder.HasOne(p => p.User)
                 .WithMany(p => p.Booking)
                 .HasForeignKey(p => p.UserId);
 
             builder.HasOne(q => q.Bedroom)
-                .WithOne(r => r.Booking)
-                .HasForeignKey<Booking>(q => q.Id);
+                .WithOne();
         }
     }
 }

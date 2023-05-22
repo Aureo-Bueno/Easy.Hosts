@@ -57,11 +57,12 @@ namespace Easy.Hosts.Core.Migrations
             modelBuilder.Entity("Easy.Hosts.Core.Domain.Booking", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("BOOKING_ID");
 
-                    b.Property<string>("BedroomId")
-                        .HasColumnType("nvarchar(max)")
+                    b.Property<Guid>("BedroomId")
+                        .HasColumnType("uniqueidentifier")
                         .HasColumnName("BEDROOM_ID");
 
                     b.Property<DateTime>("Checkin")
@@ -97,6 +98,9 @@ namespace Easy.Hosts.Core.Migrations
                         .HasColumnName("USER_ID");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("BedroomId")
+                        .IsUnique();
 
                     b.HasIndex("UserId");
 
@@ -410,8 +414,8 @@ namespace Easy.Hosts.Core.Migrations
             modelBuilder.Entity("Easy.Hosts.Core.Domain.Booking", b =>
                 {
                     b.HasOne("Easy.Hosts.Core.Domain.Bedroom", "Bedroom")
-                        .WithOne("Booking")
-                        .HasForeignKey("Easy.Hosts.Core.Domain.Booking", "Id")
+                        .WithOne()
+                        .HasForeignKey("Easy.Hosts.Core.Domain.Booking", "BedroomId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -485,11 +489,6 @@ namespace Easy.Hosts.Core.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Easy.Hosts.Core.Domain.Bedroom", b =>
-                {
-                    b.Navigation("Booking");
                 });
 
             modelBuilder.Entity("Easy.Hosts.Core.Domain.OrderService", b =>

@@ -1,10 +1,5 @@
-﻿using Easy.Hosts.Core.Domain;
-using Easy.Hosts.Core.Enums;
+﻿using Easy.Hosts.Core.Enums;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Easy.Hosts.Core.DTOs.Booking
 {
@@ -16,6 +11,6 @@ namespace Easy.Hosts.Core.DTOs.Booking
         public DateTime Checkin { get; set; }
         public DateTime Checkout { get; set; }
         public string UserId { get; set; }
-        public string BedroomId { get; set; }
+        public Guid BedroomId { get; set; }
     }
 }
