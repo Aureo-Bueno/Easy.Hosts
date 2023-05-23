@@ -5,6 +5,7 @@ using Easy.Hosts.Core.Validators.Booking;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -27,16 +28,10 @@ namespace Easy.Hosts.Controllers
             return Ok();
         }
 
-        [HttpGet("id:guid")]
-        public async Task<IActionResult> GetById()
+        [HttpGet("getBookingByUserId/{id:guid}")]
+        public async Task<IActionResult> GetBookingByUserId([FromRoute] Guid id)
         {
-            return Ok();
-        }
-
-        [HttpGet("id:string")]
-        public async Task<IActionResult> GetBookingByUserId([FromRoute] string id)
-        {
-            List<BookingReadDto> result = await _bookingRepository.GetBookingByUserIdAsync(id);
+            List<BookingReadDto> result = await _bookingRepository.GetBookingByUserIdAsync(id.ToString());
             _logger.LogInformation(MyLogEvents.GetItem, $"Get Booking by UserId: {id}");
             return Ok(result);
         }
@@ -57,13 +52,13 @@ namespace Easy.Hosts.Controllers
             return BadRequest(validate.Errors);
         }
 
-        [HttpPut("id:guid")]
+        [HttpPut("{id:guid}")]
         public async Task<IActionResult> Update()
         {
             return Ok();
         }
 
-        [HttpDelete("id:guid")]
+        [HttpDelete("{id:guid}")]
         public async Task<IActionResult> Delete()
         {
             return Ok();

@@ -49,10 +49,10 @@ namespace Easy.Hosts.Controllers
             return Ok(result);
         }
 
-        [HttpGet("id:string")]
-        public async Task<IActionResult> GetId([FromRoute] string id)
+        [HttpGet("{id:guid}")]
+        public async Task<IActionResult> GetId([FromRoute] Guid id)
         {
-            UserReadDto result = await _userService.GetUserByIdAsync(id);
+            UserReadDto result = await _userService.GetUserByIdAsync(id.ToString());
 
             return Ok(result);
         }

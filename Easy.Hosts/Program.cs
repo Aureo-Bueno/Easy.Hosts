@@ -15,6 +15,8 @@ using System.Reflection;
 using Easy.Hosts.Core.Services.Interfaces;
 using Easy.Hosts.Core.Services.AuthenticationService;
 using Easy.Hosts.Core.Services.User;
+using Microsoft.AspNetCore.Routing.Constraints;
+using Microsoft.AspNetCore.Routing;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder();
 {

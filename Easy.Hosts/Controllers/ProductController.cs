@@ -19,7 +19,7 @@ namespace Easy.Hosts.Controllers
             return Ok();
         }
 
-        [HttpGet("id:guid")]
+        [HttpGet("{id:guid}")]
         public async Task<IActionResult> GetById([FromRoute] Guid id)
         {
             return Ok();
@@ -31,13 +31,13 @@ namespace Easy.Hosts.Controllers
             return Ok();
         }
 
-        [HttpPut("id:guid")]
+        [HttpPut("{id:guid}")]
         public async Task<IActionResult> Update()
         {
             return Ok();
         }
 
-        [HttpDelete("id:guid")]
+        [HttpDelete("{id:guid}")]
         public async Task<IActionResult> Delete()
         {
             return Ok();

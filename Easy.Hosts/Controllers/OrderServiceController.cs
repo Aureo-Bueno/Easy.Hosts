@@ -76,7 +76,7 @@ namespace Easy.Hosts.Controllers
             return BadRequest(validate.Errors);
         }
 
-        [HttpDelete("id:guid")]
+        [HttpDelete("{id:guid}")]
         public async Task<IActionResult> Delete(Guid id)
         {
             await _orderServiceRepository.DeleteAsync(id);
