@@ -33,7 +33,6 @@ namespace Easy.Hosts.Core.Repositories.Entities
             {
                 Id = Guid.NewGuid(),
                 Description = orderServiceCreateDto.Description,
-                EmployeeId = orderServiceCreateDto.EmployeeId,
                 Status = orderServiceCreateDto.Status,
                 Type = orderServiceCreateDto.Type,
                 UserId = Guid.Parse(userReadDto.Id),

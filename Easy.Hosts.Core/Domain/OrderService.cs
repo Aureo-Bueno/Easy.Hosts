@@ -10,7 +10,7 @@ namespace Easy.Hosts.Core.Domain
         public Guid? ProductId { get; set; }
         public virtual Product? Product { get; set; }
         public Guid UserId { get; set; }
-        public Guid EmployeeId { get; set; }
+        public Guid? EmployeeId { get; set; }
         public StatusOrderService Status  { get; set; }
         public OrderServiceType Type { get; set; }
     }

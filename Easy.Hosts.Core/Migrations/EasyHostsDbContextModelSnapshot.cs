@@ -142,7 +142,7 @@ namespace Easy.Hosts.Core.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("DESCRIPTION");
 
-                    b.Property<Guid>("EmployeeId")
+                    b.Property<Guid?>("EmployeeId")
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("EMPLOYEE_ID");
 
