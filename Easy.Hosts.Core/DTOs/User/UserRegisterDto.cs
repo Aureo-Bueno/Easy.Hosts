@@ -13,5 +13,7 @@ namespace Easy.Hosts.Core.DTOs.User
         public string ConfirmPassword { get; set; }
         public string RoleName { get; set; }
         public string Cpf { get; set; }
+        public string Name { get; set; }
+        public string NumberPhone { get; set; }
     }
 }

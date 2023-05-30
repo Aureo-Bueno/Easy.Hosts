@@ -1,15 +1,14 @@
 ﻿using Easy.Hosts.Core.Domain;
 using Easy.Hosts.Core.DTOs.User;
+using Easy.Hosts.Core.DTOs.UserRole;
 using Easy.Hosts.Core.Events;
 using Easy.Hosts.Core.Services.Interfaces;
 using Easy.Hosts.Core.Validators;
 using FluentValidation.Results;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
-using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
 
 namespace Easy.Hosts.Controllers
 {
@@ -41,8 +40,8 @@ namespace Easy.Hosts.Controllers
 
             if(validateUser.IsValid)
             {
-                UserIdentity result = await _authenticateService.Login(userLoginDto);
-                _logger.LogInformation(MyLogEvents.GetItem,$"User {result.UserName} authenticated");
+                UserRoleRead result = await _authenticateService.Login(userLoginDto);
+                _logger.LogInformation(MyLogEvents.GetItem,$"User {result.User.UserName} authenticated");
                 return Ok(result);
             }
 
@@ -58,7 +57,7 @@ namespace Easy.Hosts.Controllers
 
             if (validateChangePassword.IsValid)
             {
-                UserIdentity result = await _authenticateService.ChangePassowod(changePasswordDto);
+                UserIdentity result = await _authenticateService.ChangePassword(changePasswordDto);
                 _logger.LogInformation(MyLogEvents.UpdateItem,$"Password updated of user {result.UserName}, hour {DateTime.Now}");
                 return Ok(result);
 

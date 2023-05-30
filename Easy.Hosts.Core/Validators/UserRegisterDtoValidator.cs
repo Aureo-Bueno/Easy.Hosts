@@ -15,7 +15,13 @@ namespace Easy.Hosts.Core.Validators
             RuleFor(userRegister => userRegister.Password)
                 .Length(8, 100)
                 .NotEmpty()
+                .Matches(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$")
                 .WithMessage("Dever ter no mínimo 8 caracteres e caracteres especiais");
+            RuleFor(userRegister => userRegister.ConfirmPassword)
+               .Length(8, 100)
+               .NotEmpty()
+               .Matches(x => x.Password)
+               .WithMessage("Dever ter no mínimo 8 caracteres e caracteres especiais");
             RuleFor(userRegister => userRegister.ConfirmPassword)
                 .Length(8, 100)
                 .Matches(userRegister => userRegister.Password)

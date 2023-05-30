@@ -39,12 +39,13 @@ namespace Easy.Hosts.Core.Services.User
         {
             UserIdentity user = new()
             {
-                UserName = userRegisterDto.Email,
+                UserName = userRegisterDto.Name,
                 Email = userRegisterDto.Email,
-                Cpf = userRegisterDto.Cpf
+                Cpf = userRegisterDto.Cpf,
+                PhoneNumber = userRegisterDto.NumberPhone
             };
 
-            UserIdentity emailExists = await _userManager.FindByEmailAsync(userRegisterDto.Email.ToUpper());
+            UserIdentity emailExists = await _userManager.FindByEmailAsync(userRegisterDto.Email);
 
             if (emailExists is null)
             {

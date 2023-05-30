@@ -1,8 +1,12 @@
-﻿using Easy.Hosts.Core.Domain;
+﻿using AutoMapper;
+using Easy.Hosts.Core.Domain;
 using Easy.Hosts.Core.DTOs.User;
+using Easy.Hosts.Core.DTOs.UserRole;
 using Easy.Hosts.Core.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Easy.Hosts.Core.Services.AuthenticationService
@@ -11,10 +15,12 @@ namespace Easy.Hosts.Core.Services.AuthenticationService
     {
         private readonly UserManager<UserIdentity> _userManager;
         private readonly SignInManager<UserIdentity> _signInManager;
-        public AuthenticateService(SignInManager<UserIdentity> signInManager, UserManager<UserIdentity> userManager)
+        private readonly IMapper _mapper;
+        public AuthenticateService(SignInManager<UserIdentity> signInManager, UserManager<UserIdentity> userManager, IMapper mapper)
         {
             _signInManager = signInManager;
             _userManager = userManager;
+            _mapper = mapper;
         }
 
         public async Task Logout()
@@ -22,20 +28,25 @@ namespace Easy.Hosts.Core.Services.AuthenticationService
            await _signInManager.SignOutAsync();
         }
 
-        public async Task<UserIdentity> Login(UserLoginDto userLoginDto)
+        public async Task<UserRoleRead> Login(UserLoginDto userLoginDto)
         {
-            SignInResult result = await _signInManager.PasswordSignInAsync(userLoginDto.Email, userLoginDto.Password, userLoginDto.RememberMe, false);
+            UserIdentity resultUser = await _userManager.FindByEmailAsync(userLoginDto.Email);
 
-            if (result.Succeeded)
+            if (resultUser is not null)
             {
-                UserIdentity resultUser = await _userManager.FindByEmailAsync(userLoginDto.Email);
-                return resultUser;
-            }
+                IList<string> resultRole = await _userManager.GetRolesAsync(resultUser);
 
+                UserRoleRead userRoleRead = new() 
+                { 
+                    User = resultUser,
+                    Role = resultRole,
+                };
+                return userRoleRead;
+            }
             return null;
         }
 
-        public async Task<UserIdentity> ChangePassowod(ChangePasswordDto changePasswordDto)
+        public async Task<UserIdentity> ChangePassword(ChangePasswordDto changePasswordDto)
         {
             UserIdentity user = await _userManager.FindByIdAsync(changePasswordDto.UserId);
 
