@@ -1,14 +1,15 @@
 ﻿using AutoMapper;
 using Easy.Hosts.Core.Domain;
-using Easy.Hosts.Core.DTOs.BedroomDto;
 using Easy.Hosts.Core.DTOs.OrderService;
 using Easy.Hosts.Core.DTOs.User;
+using Easy.Hosts.Core.Enums;
 using Easy.Hosts.Core.Persistence.Context;
 using Easy.Hosts.Core.Repositories.Interface;
 using Easy.Hosts.Core.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Easy.Hosts.Core.Repositories.Entities
@@ -33,7 +34,7 @@ namespace Easy.Hosts.Core.Repositories.Entities
             {
                 Id = Guid.NewGuid(),
                 Description = orderServiceCreateDto.Description,
-                Status = orderServiceCreateDto.Status,
+                Status = StatusOrderService.OPEN,
                 Type = orderServiceCreateDto.Type,
                 UserId = Guid.Parse(userReadDto.Id),
                 CreatedAt = DateTime.UtcNow,
@@ -74,19 +75,35 @@ namespace Easy.Hosts.Core.Repositories.Entities
 
         public async Task<OrderServiceReadDto> UpdateAsync(Guid id, OrderServiceUpdateDto orderServiceUpdateDto)
         {
-            OrderService orderService = new()
-            {
-                Id = Guid.NewGuid(),
-                UpdatedAt = DateTime.Now,
-                Description = orderServiceUpdateDto.Description,
-                Status = orderServiceUpdateDto.Status,
-            };
+            OrderService orderService = await _context.OrderService.FirstOrDefaultAsync(x => x.Id == id);
 
-            _context.OrderService.Update(orderService);
+            orderService.UpdatedAt = DateTime.Now;
+            orderService.Description = orderServiceUpdateDto.Description;
+            orderService.Status = orderServiceUpdateDto.Status;
+
             await _context.SaveChangesAsync();
 
             OrderServiceReadDto orderServiceReadDto = _mapper.Map<OrderServiceReadDto>(orderService);
             return orderServiceReadDto;
+        }
+
+        public async Task<OrderServiceReadDto> AssignEmployeOrderServiceAsync(Guid id, OrderServiceAssignDto orderServiceAssignDto)
+        {
+            OrderService orderService = await _context.OrderService.FirstOrDefaultAsync(x => x.Id == id);
+
+            if(await _userService.GetRolesByUser(orderServiceAssignDto.EmployeId))
+            {
+                orderService.UpdatedAt = DateTime.Now;
+                orderService.EmployeeId = orderServiceAssignDto.EmployeId;
+                orderService.Status = StatusOrderService.INPROGRESS;
+
+                await _context.SaveChangesAsync();
+
+                OrderServiceReadDto orderServiceReadDto = _mapper.Map<OrderServiceReadDto>(orderService);
+                return orderServiceReadDto;
+            }
+
+            return null;
         }
     }
 }

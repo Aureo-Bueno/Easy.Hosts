@@ -1,5 +1,6 @@
 ﻿using Easy.Hosts.Core.Domain;
 using Easy.Hosts.Core.DTOs.User;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -10,6 +11,7 @@ namespace Easy.Hosts.Core.Services.Interfaces
         Task<List<UserReadDto>> GetAllUserAsync();
         Task<UserReadDto> GetUserByIdAsync(string id);
         Task<UserIdentity> RegisterUser(UserRegisterDto userRegisterDto);
+        Task<bool> GetRolesByUser(Guid userId);
 
     }
 }

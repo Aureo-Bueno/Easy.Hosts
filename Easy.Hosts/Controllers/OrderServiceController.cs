@@ -1,13 +1,9 @@
-﻿using Easy.Hosts.Core.Domain;
-using Easy.Hosts.Core.DTOs.OrderService;
+﻿using Easy.Hosts.Core.DTOs.OrderService;
 using Easy.Hosts.Core.Events;
-using Easy.Hosts.Core.Persistence.Context;
 using Easy.Hosts.Core.Repositories.Interface;
 using Easy.Hosts.Core.Validators.OrderService;
 using FluentValidation.Results;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -81,6 +77,17 @@ namespace Easy.Hosts.Controllers
         {
             await _orderServiceRepository.DeleteAsync(id);
             return Ok();
+        }
+
+        [HttpPatch("{id:guid}")]
+        public async Task<IActionResult> AssignEmploye(Guid id, [FromBody] OrderServiceAssignDto orderServiceAssignDto)
+        {
+            OrderServiceReadDto orderServiceReadDto = await _orderServiceRepository.AssignEmployeOrderServiceAsync(id,orderServiceAssignDto);
+            if (orderServiceReadDto is null)
+                return BadRequest();
+
+            _logger.LogInformation(MyLogEvents.UpdateItem, $"Assign Order Service to Employee Id: {orderServiceAssignDto.EmployeId}.");
+            return Ok(orderServiceReadDto);
         }
     }
 }

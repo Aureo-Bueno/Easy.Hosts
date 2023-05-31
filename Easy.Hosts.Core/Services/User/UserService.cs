@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using Easy.Hosts.Core.Services.Interfaces;
 using AutoMapper;
 using Easy.Hosts.Core.DTOs.User;
+using System;
 
 namespace Easy.Hosts.Core.Services.User
 {
@@ -60,6 +61,13 @@ namespace Easy.Hosts.Core.Services.User
                 }
             }
             return null;
+        }
+
+        public async Task<bool> GetRolesByUser(Guid userId)
+        {
+           UserIdentity userIdentity = await _userManager.FindByIdAsync(userId.ToString());
+
+           return await _userManager.IsInRoleAsync(userIdentity, "Employee");
         }
     }
 }
