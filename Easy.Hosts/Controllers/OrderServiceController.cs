@@ -89,5 +89,22 @@ namespace Easy.Hosts.Controllers
             _logger.LogInformation(MyLogEvents.UpdateItem, $"Assign Order Service to Employee Id: {orderServiceAssignDto.EmployeId}.");
             return Ok(orderServiceReadDto);
         }
+
+        [HttpGet("getOrderServiceByUserId/{id:guid}")]
+        public async Task<IActionResult> GetOrderServiceByUser([FromRoute] Guid id)
+        {
+            List<OrderServiceReadDto> result = await _orderServiceRepository.GetOrderServiceByUserId(id);
+            if(result is not null)
+            {
+                foreach (OrderServiceReadDto item in result)
+                {
+                    _logger.LogInformation(MyLogEvents.ListItems, $"{item.Id}");
+                }
+                return Ok(result);
+            }
+
+            _logger.LogInformation(MyLogEvents.GetItemNotFound ,$"Not found Order Service");
+            return NotFound();
+        }
     }
 }

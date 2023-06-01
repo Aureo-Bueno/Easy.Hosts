@@ -13,5 +13,6 @@ namespace Easy.Hosts.Core.Repositories.Interface
         Task<bool> DeleteAsync(Guid id);
         Task<OrderServiceReadDto> UpdateAsync(Guid id, OrderServiceUpdateDto bedroomUpdateDto);
         Task<OrderServiceReadDto> AssignEmployeOrderServiceAsync(Guid id, OrderServiceAssignDto orderServiceAssignDto);
+        Task<List<OrderServiceReadDto>> GetOrderServiceByUserId(Guid id);
     }
 }

@@ -105,5 +105,16 @@ namespace Easy.Hosts.Core.Repositories.Entities
 
             return null;
         }
+
+        public async Task<List<OrderServiceReadDto>> GetOrderServiceByUserId(Guid id)
+        {
+            List<OrderService> result = await _context.OrderService
+                .Where(x => x.UserId == id && x.Status == StatusOrderService.OPEN || x.Status == StatusOrderService.INPROGRESS)
+                .ToListAsync();
+
+            List<OrderServiceReadDto> orderServiceReadDtos = _mapper.Map<List<OrderServiceReadDto>>(result);
+
+            return orderServiceReadDtos;
+        }
     }
 }
