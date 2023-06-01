@@ -17,6 +17,7 @@ using Easy.Hosts.Core.Services.AuthenticationService;
 using Easy.Hosts.Core.Services.User;
 using Microsoft.AspNetCore.Routing.Constraints;
 using Microsoft.AspNetCore.Routing;
+using System.Text.Json.Serialization;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder();
 {

@@ -6,7 +6,6 @@ namespace Easy.Hosts.Core.DTOs.Booking
     public class BookingCreateDto
     {
         public string CodeBooking { get; set; }
-        public BookingStatus Status { get; set; }
         public decimal TotalValue { get; set; }
         public DateTime Checkin { get; set; }
         public DateTime Checkout { get; set; }

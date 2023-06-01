@@ -34,7 +34,7 @@ namespace Easy.Hosts.Core.Repositories.Entities
                 Checkin = bookingCreatedDto.Checkin,
                 Checkout = bookingCreatedDto.Checkout,
                 CodeBooking = bookingCreatedDto.CodeBooking,
-                Status = bookingCreatedDto.Status,
+                Status = BookingStatus.Checkin,
                 TotalValue = bookingCreatedDto.TotalValue,
                 UserId = bookingCreatedDto.UserId,
             };
@@ -54,7 +54,11 @@ namespace Easy.Hosts.Core.Repositories.Entities
 
         public async Task<List<BookingReadDto>> GetBookingByUserIdAsync(string id)
         {
-            List<Booking> result = await _context.Booking.Where(x => x.UserId == id && x.Status == BookingStatus.Checkin).ToListAsync();
+            List<Booking> result = await _context.Booking
+                .Include(x => x.Bedroom)
+                .Include(x => x.User)
+                .Where(x => x.UserId == id && x.Status == BookingStatus.Checkin)
+                .ToListAsync();
         
             List<BookingReadDto> bookingReadDtos = _mapper.Map<List<BookingReadDto>>(result);
 
