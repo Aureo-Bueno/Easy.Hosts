@@ -35,14 +35,18 @@ namespace Easy.Hosts.Core.Services.AuthenticationService
             if (resultUser is not null)
             {
                 IList<string> resultRole = await _userManager.GetRolesAsync(resultUser);
-
-                UserRoleRead userRoleRead = new() 
-                { 
-                    User = resultUser,
-                    Role = resultRole,
-                };
-                return userRoleRead;
+                SignInResult resultLogin = await _signInManager.PasswordSignInAsync(resultUser, userLoginDto.Password, true, false);
+                if(resultLogin.Succeeded)
+                {
+                    UserRoleRead userRoleRead = new()
+                    {
+                        User = resultUser,
+                        Role = resultRole,
+                    };
+                    return userRoleRead;
+                }
             }
+
             return null;
         }
 
