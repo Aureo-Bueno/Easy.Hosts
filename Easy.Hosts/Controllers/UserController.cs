@@ -1,5 +1,6 @@
 ﻿using Easy.Hosts.Core.Domain;
 using Easy.Hosts.Core.DTOs.User;
+using Easy.Hosts.Core.Events;
 using Easy.Hosts.Core.Services.AuthenticationService;
 using Easy.Hosts.Core.Services.Interfaces;
 using Easy.Hosts.Core.Validators;
@@ -34,6 +35,13 @@ namespace Easy.Hosts.Controllers
             if (validateUser.IsValid)
             {
                 UserIdentity result = await _userService.RegisterUser(userRegisterDto);
+
+                if(result is null)
+                {
+                    _logger.LogInformation(MyLogEvents.InsertItemNotFound, $"Insert Failed");
+                    return NotFound();
+                }
+
                 _logger.LogInformation($"User created in {DateTime.Now}, email user: {result.Email}");
                 return Ok(result);
             }
@@ -53,6 +61,12 @@ namespace Easy.Hosts.Controllers
         public async Task<IActionResult> GetId([FromRoute] Guid id)
         {
             UserReadDto result = await _userService.GetUserByIdAsync(id.ToString());
+
+            if (result is null)
+            {
+                _logger.LogInformation(MyLogEvents.GetItemNotFound, $"List Failed, Id: {id}");
+                return NotFound();
+            }
 
             return Ok(result);
         }
