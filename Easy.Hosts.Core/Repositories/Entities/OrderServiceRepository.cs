@@ -41,7 +41,8 @@ namespace Easy.Hosts.Core.Repositories.Entities
                 UpdatedAt = DateTime.UtcNow,
             };
 
-            await _context.OrderService.AddAsync(orderService);
+            await _context.Set<OrderService>()
+                .AddAsync(orderService);
             await _context.SaveChangesAsync();
 
             OrderServiceReadDto orderServiceReadDto = _mapper.Map<OrderServiceReadDto>(orderService);
@@ -50,7 +51,8 @@ namespace Easy.Hosts.Core.Repositories.Entities
 
         public async Task<IEnumerable<OrderServiceReadDto>> FindAllAsync()
         {
-            IEnumerable<OrderService> result = await _context.OrderService.ToListAsync();
+            IEnumerable<OrderService> result = await _context.Set<OrderService>()
+                .ToListAsync();
 
             IEnumerable<OrderServiceReadDto> orderServiceReadDtos = _mapper.Map<IEnumerable<OrderServiceReadDto>>(result);
             return orderServiceReadDtos;
@@ -58,7 +60,8 @@ namespace Easy.Hosts.Core.Repositories.Entities
 
         public async Task<OrderServiceReadDto> GetByIdAsync(Guid id)
         {
-            OrderService result = await _context.OrderService.FirstOrDefaultAsync(f => f.Id == id);
+            OrderService result = await _context.Set<OrderService>()
+                .FirstOrDefaultAsync(f => f.Id == id);
 
             OrderServiceReadDto orderServiceReadDto = _mapper.Map<OrderServiceReadDto>(result);
             return orderServiceReadDto;
@@ -66,7 +69,8 @@ namespace Easy.Hosts.Core.Repositories.Entities
 
         public async Task<bool> DeleteAsync(Guid id)
         {
-            OrderService result = await _context.OrderService.FirstOrDefaultAsync(f => f.Id == id);
+            OrderService result = await _context.Set<OrderService>()
+                .FirstOrDefaultAsync(f => f.Id == id);
 
             _context.Remove(result);
             _context.SaveChanges();
@@ -75,7 +79,8 @@ namespace Easy.Hosts.Core.Repositories.Entities
 
         public async Task<OrderServiceReadDto> UpdateAsync(Guid id, OrderServiceUpdateDto orderServiceUpdateDto)
         {
-            OrderService orderService = await _context.OrderService.FirstOrDefaultAsync(x => x.Id == id);
+            OrderService orderService = await _context.Set<OrderService>()
+                .FirstOrDefaultAsync(x => x.Id == id);
 
             orderService.UpdatedAt = DateTime.Now;
             orderService.Description = orderServiceUpdateDto.Description;
@@ -89,7 +94,8 @@ namespace Easy.Hosts.Core.Repositories.Entities
 
         public async Task<OrderServiceReadDto> AssignEmployeOrderServiceAsync(Guid id, OrderServiceAssignDto orderServiceAssignDto)
         {
-            OrderService orderService = await _context.OrderService.FirstOrDefaultAsync(x => x.Id == id);
+            OrderService orderService = await _context.Set<OrderService>()
+                .FirstOrDefaultAsync(x => x.Id == id);
 
             if(await _userService.GetRolesByUser(orderServiceAssignDto.EmployeId))
             {
@@ -108,7 +114,7 @@ namespace Easy.Hosts.Core.Repositories.Entities
 
         public async Task<List<OrderServiceReadDto>> GetOrderServiceByUserId(Guid id)
         {
-            List<OrderService> result = await _context.OrderService
+            List<OrderService> result = await _context.Set<OrderService>()
                 .Where(x => x.UserId == id && x.Status == StatusOrderService.OPEN || x.Status == StatusOrderService.INPROGRESS)
                 .ToListAsync();
 

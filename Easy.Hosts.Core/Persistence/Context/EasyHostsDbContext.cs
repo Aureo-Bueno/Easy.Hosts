@@ -18,26 +18,15 @@ namespace Easy.Hosts.Core.Persistence.Context
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
-            // connect to sql server with connection string from app settings
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-
-            //Remove delete cascade
             foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
                 relationship.DeleteBehavior = DeleteBehavior.Restrict;
         }
-
-        public DbSet<Bedroom> Bedroom { get; set; }
-        public DbSet<Booking> Booking { get; set; }
-        public DbSet<Event> Event { get; set; }
-        public DbSet<TypeBedroom> TypeBedroom { get; set; }
-        public DbSet<Product> Product { get; set; }
-        public DbSet<OrderService> OrderService { get; set; }
     }
 }

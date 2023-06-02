@@ -25,18 +25,18 @@ namespace Easy.Hosts.Core.Repositories.Entities
                 throw new ArgumentException(nameof(@event));
             }
 
-            await _context.Event.AddAsync(@event);
+            await _context.Set<Event>().AddAsync(@event);
             await _context.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<Event>> FindAllAsync()
         {
-            return await _context.Event.ToListAsync();
+            return await _context.Set<Event>().ToListAsync();
         }
 
         public async Task<Event> GetByIdAsync(Guid id)
         {
-            return await _context.Event.FirstOrDefaultAsync(f => f.Id == id);
+            return await _context.Set<Event>().FirstOrDefaultAsync(f => f.Id == id);
         }
     }
 }

@@ -12,5 +12,6 @@ namespace Easy.Hosts.Core.Repositories.Interface
         Task<IEnumerable<Booking>> FindAllAsync();
         Task<Booking> GetByIdAsync(Guid id);
         Task<List<BookingReadDto>> GetBookingByUserIdAsync(string id);
+        Task<BookingReadDto> UpdateStatusCheckoutBooking(Guid id);
     }
 }

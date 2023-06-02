@@ -49,6 +49,13 @@ namespace Easy.Hosts.Controllers
             if (validate.IsValid)
             {
                 OrderServiceReadDto result = await _orderServiceRepository.InsertAsync(orderServiceCreateDto);
+
+                if(result is null) 
+                {
+                    _logger.LogInformation(MyLogEvents.InsertItemNotFound, $"Inserted Failed");
+                    return NoContent();
+                }
+
                 _logger.LogInformation(MyLogEvents.InsertItem, $"Insert Order Service, Description {result.Description}");
                 return Ok(result);
             }
@@ -65,6 +72,13 @@ namespace Easy.Hosts.Controllers
             if (validate.IsValid) 
             {
                 OrderServiceReadDto result = await _orderServiceRepository.UpdateAsync(id, orderServiceUpdateDto);
+
+                if (result is null)
+                {
+                    _logger.LogInformation(MyLogEvents.InsertItemNotFound, $"Updated Failed, Order Service Id: {id}");
+                    return NoContent();
+                }
+
                 _logger.LogInformation(MyLogEvents.UpdateItem, $"Update Order Service, Id: {id}.");
                 return Ok(result);
             }
@@ -83,8 +97,12 @@ namespace Easy.Hosts.Controllers
         public async Task<IActionResult> AssignEmploye(Guid id, [FromBody] OrderServiceAssignDto orderServiceAssignDto)
         {
             OrderServiceReadDto orderServiceReadDto = await _orderServiceRepository.AssignEmployeOrderServiceAsync(id,orderServiceAssignDto);
+           
             if (orderServiceReadDto is null)
-                return BadRequest();
+            {
+                _logger.LogInformation(MyLogEvents.InsertItemNotFound, $"Assign Failed, Order Service Id: {id}");
+                return NoContent();
+            }
 
             _logger.LogInformation(MyLogEvents.UpdateItem, $"Assign Order Service to Employee Id: {orderServiceAssignDto.EmployeId}.");
             return Ok(orderServiceReadDto);

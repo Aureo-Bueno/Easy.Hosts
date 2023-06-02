@@ -6,6 +6,7 @@ namespace Easy.Hosts.Core.DTOs.Booking
 {
     public class BookingReadDto
     {
+        public Guid Id { get; set; }
         public string CodeBooking { get; set; }
         public BookingStatus Status { get; set; }
         public decimal TotalValue { get; set; }

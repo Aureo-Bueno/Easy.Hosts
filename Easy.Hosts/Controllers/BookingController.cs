@@ -63,5 +63,19 @@ namespace Easy.Hosts.Controllers
         {
             return Ok();
         }
+
+        [HttpPatch("updateStatusCheckoutBooking/{id:guid}")]
+        public async Task<IActionResult> UpdateStatusCheckout([FromRoute] Guid id)
+        {
+            BookingReadDto result = await _bookingRepository.UpdateStatusCheckoutBooking(id);
+            if (result is null)
+            {
+                _logger.LogInformation(MyLogEvents.UpdateItemNotFound, $"Booking Not Found, Request Id: {id}");
+                return NotFound();
+            }
+
+            _logger.LogInformation(MyLogEvents.UpdateItem, $"Booking Updated Status, {result.Status}, Id: {result.Id}");
+            return Ok(result);
+        }
     }
 }

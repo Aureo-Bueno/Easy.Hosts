@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Easy.Hosts.Core.DTOs.BedroomDto;
 using AutoMapper;
 using Easy.Hosts.Core.Repositories.Interface;
+using System.Linq;
 
 namespace Easy.Hosts.Core.Repositories.Entities
 {
@@ -32,7 +33,7 @@ namespace Easy.Hosts.Core.Repositories.Entities
                 UpdatedAt = DateTime.UtcNow,
             };
 
-            await _context.Bedroom.AddAsync(bedromNew);
+            await _context.Set<Bedroom>().AddAsync(bedromNew);
             await _context.SaveChangesAsync();
 
             BedroomReadDto bedroomReadDto = _mapper.Map<BedroomReadDto>(bedromNew);
@@ -41,7 +42,7 @@ namespace Easy.Hosts.Core.Repositories.Entities
 
         public async Task<IEnumerable<BedroomReadDto>> FindAllAsync()
         {
-            IEnumerable<Bedroom> result = await _context.Bedroom.ToListAsync();
+            IEnumerable<Bedroom> result = await _context.Set<Bedroom>().ToListAsync();
 
             IEnumerable<BedroomReadDto> bedroomReadDtos = _mapper.Map<IEnumerable<BedroomReadDto>>(result);
             return bedroomReadDtos;
@@ -49,7 +50,7 @@ namespace Easy.Hosts.Core.Repositories.Entities
 
         public async Task<BedroomReadDto> GetByIdAsync(Guid id)
         {
-            Bedroom result = await _context.Bedroom.FirstOrDefaultAsync(f => f.Id == id);
+            Bedroom result = await _context.Set<Bedroom>().FirstOrDefaultAsync(f => f.Id == id);
 
             BedroomReadDto bedroomReadDto = _mapper.Map<BedroomReadDto>(result);
             return bedroomReadDto;
@@ -57,7 +58,7 @@ namespace Easy.Hosts.Core.Repositories.Entities
 
         public async Task<bool> DeleteAsync(Guid id)
         {
-            Bedroom result = await _context.Bedroom.FirstOrDefaultAsync(f => f.Id == id);
+            Bedroom result = await _context.Set<Bedroom>().FirstOrDefaultAsync(f => f.Id == id);
 
             _context.Remove(result);
             _context.SaveChanges();
@@ -66,17 +67,17 @@ namespace Easy.Hosts.Core.Repositories.Entities
 
         public async Task<BedroomReadDto> UpdateAsync(Guid id, BedroomUpdateDto bedroomUpdateDto)
         {
-            Bedroom bedromUpdate = new()
-            {
-                Name = bedroomUpdateDto.Name,
-                Number = bedroomUpdateDto.Number,
-                UpdatedAt = DateTime.UtcNow,
-            };
+            Bedroom result = await _context.Set<Bedroom>()
+                .Where(x => x.Id ==  id)
+                .FirstOrDefaultAsync();
 
-            _context.Bedroom.Update(bedromUpdate);
+            result.UpdatedAt = DateTime.Now;
+            result.Name = bedroomUpdateDto.Name;
+            result.Number = bedroomUpdateDto.Number;
+
             await _context.SaveChangesAsync();
 
-            BedroomReadDto bedroomReadDto = _mapper.Map<BedroomReadDto>(bedromUpdate);
+            BedroomReadDto bedroomReadDto = _mapper.Map<BedroomReadDto>(result);
             return bedroomReadDto;
         }
     }

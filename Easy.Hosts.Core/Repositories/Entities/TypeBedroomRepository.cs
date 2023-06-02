@@ -25,18 +25,18 @@ namespace Easy.Hosts.Core.Repositories.Entities
                 throw new ArgumentException(nameof(typeBedroom));
             }
 
-            await _context.TypeBedroom.AddAsync(typeBedroom);
+            await _context.Set<TypeBedroom>().AddAsync(typeBedroom);
             await _context.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<TypeBedroom>> FindAllAsync()
         {
-            return await _context.TypeBedroom.ToListAsync();
+            return await _context.Set<TypeBedroom>().ToListAsync();
         }
 
         public async Task<TypeBedroom> GetByIdAsync(Guid id)
         {
-            return await _context.TypeBedroom.FirstOrDefaultAsync(f => f.Id == id);
+            return await _context.Set<TypeBedroom>().FirstOrDefaultAsync(f => f.Id == id);
         }
     }
 }

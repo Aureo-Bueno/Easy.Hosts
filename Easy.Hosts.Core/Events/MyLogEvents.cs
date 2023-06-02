@@ -19,5 +19,6 @@ namespace Easy.Hosts.Core.Events
 
         public const int GetItemNotFound = 4000;
         public const int UpdateItemNotFound = 4001;
+        public const int InsertItemNotFound = 4002;
     }
 }

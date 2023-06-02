@@ -38,23 +38,23 @@ namespace Easy.Hosts.Core.Repositories.Entities
                 TotalValue = bookingCreatedDto.TotalValue,
                 UserId = bookingCreatedDto.UserId,
             };
-            await _context.Booking.AddAsync(booking);
+            await _context.Set<Booking>().AddAsync(booking);
             await _context.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<Booking>> FindAllAsync()
         {
-            return await _context.Booking.ToListAsync();
+            return await _context.Set<Booking>().ToListAsync();
         }
 
         public async Task<Booking> GetByIdAsync(Guid id)
         {
-            return await _context.Booking.FirstOrDefaultAsync(f => f.Id == id);
+            return await _context.Set<Booking>().FirstOrDefaultAsync(f => f.Id == id);
         }
 
         public async Task<List<BookingReadDto>> GetBookingByUserIdAsync(string id)
         {
-            List<Booking> result = await _context.Booking
+            List<Booking> result = await _context.Set<Booking>()
                 .Include(x => x.Bedroom)
                 .Include(x => x.User)
                 .Where(x => x.UserId == id && x.Status == BookingStatus.Checkin)
@@ -63,6 +63,21 @@ namespace Easy.Hosts.Core.Repositories.Entities
             List<BookingReadDto> bookingReadDtos = _mapper.Map<List<BookingReadDto>>(result);
 
             return bookingReadDtos;
+        }
+
+        public async Task<BookingReadDto> UpdateStatusCheckoutBooking(Guid id)
+        {
+            Booking result = await _context.Set<Booking>()
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+            result.UpdatedAt = DateTime.Now;
+            result.Status = BookingStatus.Checkout;
+            await _context.SaveChangesAsync();
+
+            BookingReadDto bookingReadDto = _mapper.Map<BookingReadDto>(result);
+
+            return bookingReadDto;
+
         }
     }
 }
