@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Easy.Hosts.Core.Domain;
+using Easy.Hosts.Core.DTOs.Product;
+using Easy.Hosts.Core.Repositories.Interface;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -10,13 +13,19 @@ namespace Easy.Hosts.Controllers
 {
     [Route("api/easyhosts/[controller]")]
     [ApiController]
-    [Authorize]
     public class ProductController : ControllerBase
     {
+        private readonly IProductRepository _productRepository;
+        public ProductController(IProductRepository productRepository)
+        {
+            _productRepository = productRepository;
+        }
+
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            return Ok();
+            IEnumerable<Product> product = await _productRepository.FindAllAsync();
+            return Ok(product);
         }
 
         [HttpGet("{id:guid}")]
@@ -26,8 +35,9 @@ namespace Easy.Hosts.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Insert()
+        public async Task<IActionResult> Insert([FromBody] ProductCreate productCreate)
         {
+            await _productRepository.InsertAsync(productCreate);
             return Ok();
         }
 

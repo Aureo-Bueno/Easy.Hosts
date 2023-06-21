@@ -39,6 +39,7 @@ namespace Easy.Hosts.Core.Repositories.Entities
                 UserId = Guid.Parse(userReadDto.Id),
                 CreatedAt = DateTime.UtcNow,
                 UpdatedAt = DateTime.UtcNow,
+                ProductId = orderServiceCreateDto.ProductId,
             };
 
             await _context.Set<OrderService>()

@@ -20,6 +20,12 @@ namespace Easy.Hosts.Core.Persistence.Configuration
 
             builder.Property(p => p.UpdatedAt)
                 .HasColumnName("UPDATED_AT");
+
+            builder.Property(p => p.Name)
+                .HasColumnName("NAME_PRODUCT");
+
+            builder.Property(p => p.Quatity)
+                .HasColumnName("QUANTITY");
         }
     }
 }

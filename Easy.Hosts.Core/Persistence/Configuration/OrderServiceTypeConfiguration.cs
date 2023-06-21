@@ -1,7 +1,6 @@
 ﻿using Easy.Hosts.Core.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System.Reflection.Emit;
 
 namespace Easy.Hosts.Core.Persistence.Configuration
 {
@@ -18,10 +17,6 @@ namespace Easy.Hosts.Core.Persistence.Configuration
 
             builder.Property(p => p.ProductId)
                 .HasColumnName("PRODUCT_ID");
-
-            builder.HasOne(a => a.Product)
-                .WithOne(b => b.OrderService)
-                .HasForeignKey<Product>(b => b.Id);
 
             builder.Property(p => p.Description)
                 .HasColumnName("DESCRIPTION");

@@ -168,18 +168,31 @@ namespace Easy.Hosts.Core.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ProductId")
+                        .IsUnique()
+                        .HasFilter("[PRODUCT_ID] IS NOT NULL");
+
                     b.ToTable("TB_ORDER_SERVICE", (string)null);
                 });
 
             modelBuilder.Entity("Easy.Hosts.Core.Domain.Product", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("PRODUCT_ID");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2")
                         .HasColumnName("CREATED_AT");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("NAME_PRODUCT");
+
+                    b.Property<int>("Quatity")
+                        .HasColumnType("int")
+                        .HasColumnName("QUANTITY");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2")
@@ -429,15 +442,14 @@ namespace Easy.Hosts.Core.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Easy.Hosts.Core.Domain.Product", b =>
+            modelBuilder.Entity("Easy.Hosts.Core.Domain.OrderService", b =>
                 {
-                    b.HasOne("Easy.Hosts.Core.Domain.OrderService", "OrderService")
-                        .WithOne("Product")
-                        .HasForeignKey("Easy.Hosts.Core.Domain.Product", "Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                    b.HasOne("Easy.Hosts.Core.Domain.Product", "Product")
+                        .WithOne("OrderService")
+                        .HasForeignKey("Easy.Hosts.Core.Domain.OrderService", "ProductId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
-                    b.Navigation("OrderService");
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -491,9 +503,9 @@ namespace Easy.Hosts.Core.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Easy.Hosts.Core.Domain.OrderService", b =>
+            modelBuilder.Entity("Easy.Hosts.Core.Domain.Product", b =>
                 {
-                    b.Navigation("Product");
+                    b.Navigation("OrderService");
                 });
 
             modelBuilder.Entity("Easy.Hosts.Core.Domain.UserIdentity", b =>

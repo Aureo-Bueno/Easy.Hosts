@@ -4,6 +4,8 @@ namespace Easy.Hosts.Core.Domain
 {
     public class Product : BaseModel
     {
-        public OrderService OrderService { get; set; }
+        public string Name { get; set; }
+        public int Quatity { get; set; }
+        public virtual OrderService? OrderService { get; set; }
     }
 }

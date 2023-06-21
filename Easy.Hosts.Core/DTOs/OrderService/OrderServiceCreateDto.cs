@@ -9,5 +9,6 @@ namespace Easy.Hosts.Core.DTOs.OrderService
         public string Description { get; set; }
         public Guid UserId { get; set; }
         public OrderServiceType Type { get; set; }
+        public Guid? ProductId { get; set; }
     }
 }

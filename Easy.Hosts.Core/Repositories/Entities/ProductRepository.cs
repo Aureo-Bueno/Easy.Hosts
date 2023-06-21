@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Easy.Hosts.Core.Repositories.Interface;
+using Easy.Hosts.Core.DTOs.Product;
 
 namespace Easy.Hosts.Core.Repositories.Entities
 {
@@ -18,12 +19,16 @@ namespace Easy.Hosts.Core.Repositories.Entities
             _context = context;
         }
 
-        public async Task InsertAsync(Product product)
+        public async Task InsertAsync(ProductCreate productCreate)
         {
-            if (product == null)
+            Product product = new Product
             {
-                throw new ArgumentException(nameof(product));
-            }
+                Id = Guid.NewGuid(),
+                CreatedAt = DateTime.Now,
+                UpdatedAt = DateTime.Now,
+                Name = productCreate.Name,
+                Quatity = productCreate.Quantity,
+            };
 
             await _context.Set<Product>().AddAsync(product);
             await _context.SaveChangesAsync();

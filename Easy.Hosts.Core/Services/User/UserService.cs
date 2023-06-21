@@ -67,7 +67,7 @@ namespace Easy.Hosts.Core.Services.User
         {
            UserIdentity userIdentity = await _userManager.FindByIdAsync(userId.ToString());
 
-           return await _userManager.IsInRoleAsync(userIdentity, "Employee");
+           return await _userManager.IsInRoleAsync(userIdentity, "Manager");
         }
     }
 }
