@@ -41,6 +41,10 @@ namespace Easy.Hosts.Controllers
             if(validateUser.IsValid)
             {
                 UserRoleRead result = await _authenticateService.Login(userLoginDto);
+                
+                if(result is null) 
+                    return NoContent();
+
                 _logger.LogInformation(MyLogEvents.GetItem,$"User {result.User.UserName} authenticated");
                 return Ok(result);
             }
