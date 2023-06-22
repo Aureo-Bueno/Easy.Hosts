@@ -52,15 +52,15 @@ namespace Easy.Hosts.Core.Repositories.Entities
             return await _context.Set<Booking>().FirstOrDefaultAsync(f => f.Id == id);
         }
 
-        public async Task<BookingReadDto> GetBookingByUserIdAsync(string id)
+        public async Task<IEnumerable<BookingReadDto>> GetBookingByUserIdAsync(string id)
         {
-            Booking result = await _context.Set<Booking>()
+            IEnumerable<Booking> result = await _context.Set<Booking>()
                 .Include(x => x.Bedroom)
                 .Include(x => x.User)
                 .Where(x => x.UserId == id && x.Status == BookingStatus.Checkin)
-                .FirstOrDefaultAsync();
+                .ToListAsync();
         
-            BookingReadDto bookingReadDtos = _mapper.Map<BookingReadDto>(result);
+            IEnumerable<BookingReadDto> bookingReadDtos = _mapper.Map<IEnumerable<BookingReadDto>>(result);
 
             return bookingReadDtos;
         }

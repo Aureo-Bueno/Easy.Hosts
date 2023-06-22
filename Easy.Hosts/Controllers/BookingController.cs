@@ -31,7 +31,7 @@ namespace Easy.Hosts.Controllers
         [HttpGet("getBookingByUserId/{id:guid}")]
         public async Task<IActionResult> GetBookingByUserId([FromRoute] Guid id)
         {
-            BookingReadDto result = await _bookingRepository.GetBookingByUserIdAsync(id.ToString());
+            IEnumerable<BookingReadDto> result = await _bookingRepository.GetBookingByUserIdAsync(id.ToString());
             _logger.LogInformation(MyLogEvents.GetItem, $"Get Booking by UserId: {id}");
             return Ok(result);
         }
