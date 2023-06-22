@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Easy.Hosts.Core.Repositories.Interface;
 using Easy.Hosts.Core.Enums;
-using Easy.Hosts.Core.DTOs.Booking;
 using AutoMapper;
+using Easy.Hosts.Core.DTOs.BookingDto;
 
 namespace Easy.Hosts.Core.Repositories.Entities
 {
@@ -52,15 +52,15 @@ namespace Easy.Hosts.Core.Repositories.Entities
             return await _context.Set<Booking>().FirstOrDefaultAsync(f => f.Id == id);
         }
 
-        public async Task<List<BookingReadDto>> GetBookingByUserIdAsync(string id)
+        public async Task<BookingReadDto> GetBookingByUserIdAsync(string id)
         {
-            List<Booking> result = await _context.Set<Booking>()
+            Booking result = await _context.Set<Booking>()
                 .Include(x => x.Bedroom)
                 .Include(x => x.User)
                 .Where(x => x.UserId == id && x.Status == BookingStatus.Checkin)
-                .ToListAsync();
+                .FirstOrDefaultAsync();
         
-            List<BookingReadDto> bookingReadDtos = _mapper.Map<List<BookingReadDto>>(result);
+            BookingReadDto bookingReadDtos = _mapper.Map<BookingReadDto>(result);
 
             return bookingReadDtos;
         }
@@ -78,6 +78,15 @@ namespace Easy.Hosts.Core.Repositories.Entities
 
             return bookingReadDto;
 
+        }
+
+        public async Task<BookingReadDto> GetByUserIdAsync(Guid id)
+        {
+            Booking result = await _context.Set<Booking>().Where(x => x.UserId == id.ToString()).FirstOrDefaultAsync();
+
+            BookingReadDto bookingReadDto = _mapper.Map<BookingReadDto>(result);
+
+            return bookingReadDto;
         }
     }
 }

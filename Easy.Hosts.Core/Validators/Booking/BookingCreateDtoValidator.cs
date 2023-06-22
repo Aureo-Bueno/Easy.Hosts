@@ -1,4 +1,4 @@
-﻿using Easy.Hosts.Core.DTOs.Booking;
+﻿using Easy.Hosts.Core.DTOs.BookingDto;
 using FluentValidation;
 
 namespace Easy.Hosts.Core.Validators.Booking

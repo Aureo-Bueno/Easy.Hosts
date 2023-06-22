@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Easy.Hosts.Core.Domain;
-using Easy.Hosts.Core.DTOs.OrderService;
+using Easy.Hosts.Core.DTOs.BedroomDto;
+using Easy.Hosts.Core.DTOs.OrderServiceDto;
 using Easy.Hosts.Core.DTOs.User;
 using Easy.Hosts.Core.Enums;
 using Easy.Hosts.Core.Persistence.Context;
@@ -19,11 +20,13 @@ namespace Easy.Hosts.Core.Repositories.Entities
         private readonly EasyHostsDbContext _context;
         private readonly IMapper _mapper;
         private readonly IUserService _userService;
-        public OrderServiceRepository(EasyHostsDbContext context, IMapper mapper, IUserService userService)
+        private readonly IBookingRepository _bookingRepository;
+        public OrderServiceRepository(EasyHostsDbContext context, IMapper mapper, IUserService userService, IBookingRepository bookingRepository)
         {
             _context = context;
             _mapper = mapper;
             _userService = userService;
+            _bookingRepository = bookingRepository;
         }
 
         public async Task<OrderServiceReadDto> InsertAsync(OrderServiceCreateDto orderServiceCreateDto)
@@ -40,6 +43,7 @@ namespace Easy.Hosts.Core.Repositories.Entities
                 CreatedAt = DateTime.UtcNow,
                 UpdatedAt = DateTime.UtcNow,
                 ProductId = orderServiceCreateDto.ProductId,
+                BedroomId = orderServiceCreateDto.BedroomId,
             };
 
             await _context.Set<OrderService>()
@@ -56,6 +60,8 @@ namespace Easy.Hosts.Core.Repositories.Entities
                 .ToListAsync();
 
             IEnumerable<OrderServiceReadDto> orderServiceReadDtos = _mapper.Map<IEnumerable<OrderServiceReadDto>>(result);
+
+
             return orderServiceReadDtos;
         }
 
@@ -98,7 +104,7 @@ namespace Easy.Hosts.Core.Repositories.Entities
             OrderService orderService = await _context.Set<OrderService>()
                 .FirstOrDefaultAsync(x => x.Id == id);
 
-            if(await _userService.GetRolesByUser(orderServiceAssignDto.EmployeId))
+            if (await _userService.GetRolesByUser(orderServiceAssignDto.EmployeId))
             {
                 orderService.UpdatedAt = DateTime.Now;
                 orderService.EmployeeId = orderServiceAssignDto.EmployeId;

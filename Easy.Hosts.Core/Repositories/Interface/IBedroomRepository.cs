@@ -10,7 +10,7 @@ namespace Easy.Hosts.Core.Repositories.Interface
     {
         Task<BedroomReadDto> InsertAsync(BedroomCreateDto bedroom);
         Task<IEnumerable<BedroomReadDto>> FindAllAsync();
-        Task<BedroomReadDto> GetByIdAsync(Guid id);
+        Task<BedroomReadDto> GetByIdAsync(Guid? id);
         Task<bool> DeleteAsync(Guid id);
         Task<BedroomReadDto> UpdateAsync(Guid id, BedroomUpdateDto bedroomUpdateDto);
 

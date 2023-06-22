@@ -18,6 +18,9 @@ namespace Easy.Hosts.Core.Persistence.Configuration
             builder.Property(p => p.ProductId)
                 .HasColumnName("PRODUCT_ID");
 
+            builder.Property(p => p.BedroomId)
+               .HasColumnName("BEDROOM_ID");
+
             builder.Property(p => p.Description)
                 .HasColumnName("DESCRIPTION");
 

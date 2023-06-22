@@ -1,4 +1,4 @@
-﻿using Easy.Hosts.Core.DTOs.OrderService;
+﻿using Easy.Hosts.Core.DTOs.OrderServiceDto;
 using FluentValidation;
 
 namespace Easy.Hosts.Core.Validators.OrderService

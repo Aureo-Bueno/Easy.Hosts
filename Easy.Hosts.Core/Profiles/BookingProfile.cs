@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Easy.Hosts.Core.Domain;
-using Easy.Hosts.Core.DTOs.Booking;
+using Easy.Hosts.Core.DTOs.BookingDto;
 
 namespace Easy.Hosts.Core.Profiles
 {

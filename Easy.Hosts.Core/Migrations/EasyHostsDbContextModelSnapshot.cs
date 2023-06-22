@@ -134,6 +134,10 @@ namespace Easy.Hosts.Core.Migrations
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("ID");
 
+                    b.Property<Guid?>("BedroomId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("BEDROOM_ID");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2")
                         .HasColumnName("CREATED_AT");
@@ -167,6 +171,8 @@ namespace Easy.Hosts.Core.Migrations
                         .HasColumnName("USER_ID");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("BedroomId");
 
                     b.HasIndex("ProductId")
                         .IsUnique()
@@ -444,10 +450,17 @@ namespace Easy.Hosts.Core.Migrations
 
             modelBuilder.Entity("Easy.Hosts.Core.Domain.OrderService", b =>
                 {
+                    b.HasOne("Easy.Hosts.Core.Domain.Bedroom", "Bedroom")
+                        .WithMany()
+                        .HasForeignKey("BedroomId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("Easy.Hosts.Core.Domain.Product", "Product")
                         .WithOne("OrderService")
                         .HasForeignKey("Easy.Hosts.Core.Domain.OrderService", "ProductId")
                         .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("Bedroom");
 
                     b.Navigation("Product");
                 });

@@ -1,4 +1,4 @@
-﻿using Easy.Hosts.Core.DTOs.OrderService;
+﻿using Easy.Hosts.Core.DTOs.OrderServiceDto;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;

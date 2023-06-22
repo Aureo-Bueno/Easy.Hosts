@@ -1,4 +1,4 @@
-﻿using Easy.Hosts.Core.DTOs.Booking;
+﻿using Easy.Hosts.Core.DTOs.BookingDto;
 using Easy.Hosts.Core.Events;
 using Easy.Hosts.Core.Repositories.Interface;
 using Easy.Hosts.Core.Validators.Booking;
@@ -31,7 +31,7 @@ namespace Easy.Hosts.Controllers
         [HttpGet("getBookingByUserId/{id:guid}")]
         public async Task<IActionResult> GetBookingByUserId([FromRoute] Guid id)
         {
-            List<BookingReadDto> result = await _bookingRepository.GetBookingByUserIdAsync(id.ToString());
+            BookingReadDto result = await _bookingRepository.GetBookingByUserIdAsync(id.ToString());
             _logger.LogInformation(MyLogEvents.GetItem, $"Get Booking by UserId: {id}");
             return Ok(result);
         }

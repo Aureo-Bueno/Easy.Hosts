@@ -13,5 +13,7 @@ namespace Easy.Hosts.Core.Domain
         public Guid? EmployeeId { get; set; }
         public StatusOrderService Status  { get; set; }
         public OrderServiceType Type { get; set; }
+        public Guid? BedroomId { get; set; }
+        public virtual Bedroom? Bedroom { get; set; }
     }
 }

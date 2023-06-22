@@ -48,7 +48,7 @@ namespace Easy.Hosts.Core.Repositories.Entities
             return bedroomReadDtos;
         }
 
-        public async Task<BedroomReadDto> GetByIdAsync(Guid id)
+        public async Task<BedroomReadDto> GetByIdAsync(Guid? id)
         {
             Bedroom result = await _context.Set<Bedroom>().FirstOrDefaultAsync(f => f.Id == id);
 

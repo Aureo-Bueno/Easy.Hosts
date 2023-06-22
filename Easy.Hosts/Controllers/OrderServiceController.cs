@@ -1,4 +1,4 @@
-﻿using Easy.Hosts.Core.DTOs.OrderService;
+﻿using Easy.Hosts.Core.DTOs.OrderServiceDto;
 using Easy.Hosts.Core.Events;
 using Easy.Hosts.Core.Repositories.Interface;
 using Easy.Hosts.Core.Validators.OrderService;
