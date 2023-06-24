@@ -14,5 +14,6 @@ namespace Easy.Hosts.Core.Repositories.Interface
         Task<OrderServiceReadDto> UpdateAsync(Guid id, OrderServiceUpdateDto bedroomUpdateDto);
         Task<OrderServiceReadDto> AssignEmployeOrderServiceAsync(Guid id, OrderServiceAssignDto orderServiceAssignDto);
         Task<List<OrderServiceReadDto>> GetOrderServiceByUserId(Guid id);
+        Task<OrderServiceReadDto> ClompletedOrderServiceAsync(Guid id, OrderServiceAssignDto orderServiceAssignDto);
     }
 }

@@ -77,5 +77,13 @@ namespace Easy.Hosts.Controllers
             _logger.LogInformation(MyLogEvents.UpdateItem, $"Booking Updated Status, {result.Status}, Id: {result.Id}");
             return Ok(result);
         }
+
+        [HttpGet("getBookingByUserIdOrderService/{id:guid}")]
+        public async Task<IActionResult> GetBookingByUserIdOrderService([FromRoute] Guid id)
+        {
+            BookingReadDto result = await _bookingRepository.GetBookingByUserIdOrderServiceAsync(id.ToString());
+            _logger.LogInformation(MyLogEvents.GetItem, $"Get Booking by UserId: {id}");
+            return Ok(result);
+        }
     }
 }

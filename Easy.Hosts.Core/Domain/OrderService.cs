@@ -1,6 +1,7 @@
 ﻿using Easy.Hosts.Core.Domain.Model;
 using Easy.Hosts.Core.Enums;
 using System;
+using System.Text.Json.Serialization;
 
 namespace Easy.Hosts.Core.Domain
 {
@@ -8,6 +9,7 @@ namespace Easy.Hosts.Core.Domain
     {
         public string Description { get; set; }
         public Guid? ProductId { get; set; }
+        [JsonIgnore]
         public virtual Product? Product { get; set; }
         public Guid UserId { get; set; }
         public Guid? EmployeeId { get; set; }

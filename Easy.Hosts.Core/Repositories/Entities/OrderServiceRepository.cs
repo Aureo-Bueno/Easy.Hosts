@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Easy.Hosts.Core.Domain;
-using Easy.Hosts.Core.DTOs.BedroomDto;
 using Easy.Hosts.Core.DTOs.OrderServiceDto;
 using Easy.Hosts.Core.DTOs.User;
 using Easy.Hosts.Core.Enums;
@@ -56,11 +55,12 @@ namespace Easy.Hosts.Core.Repositories.Entities
 
         public async Task<IEnumerable<OrderServiceReadDto>> FindAllAsync()
         {
-            IEnumerable<OrderService> result = await _context.Set<OrderService>()
+            IEnumerable<OrderService> resultOrderService = await _context.Set<OrderService>()
+                .Include(b => b.Bedroom)
+                .Include(c => c.Product)
                 .ToListAsync();
 
-            IEnumerable<OrderServiceReadDto> orderServiceReadDtos = _mapper.Map<IEnumerable<OrderServiceReadDto>>(result);
-
+            IEnumerable<OrderServiceReadDto> orderServiceReadDtos = _mapper.Map<IEnumerable<OrderServiceReadDto>>(resultOrderService);
 
             return orderServiceReadDtos;
         }
@@ -128,6 +128,26 @@ namespace Easy.Hosts.Core.Repositories.Entities
             List<OrderServiceReadDto> orderServiceReadDtos = _mapper.Map<List<OrderServiceReadDto>>(result);
 
             return orderServiceReadDtos;
+        }
+
+        public async Task<OrderServiceReadDto> ClompletedOrderServiceAsync(Guid id, OrderServiceAssignDto orderServiceAssignDto)
+        {
+            OrderService orderService = await _context.Set<OrderService>()
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+            if (await _userService.GetRolesByUser(orderServiceAssignDto.EmployeId))
+            {
+                orderService.UpdatedAt = DateTime.Now;
+                orderService.EmployeeId = orderServiceAssignDto.EmployeId;
+                orderService.Status = StatusOrderService.COMPLETED;
+
+                await _context.SaveChangesAsync();
+
+                OrderServiceReadDto orderServiceReadDto = _mapper.Map<OrderServiceReadDto>(orderService);
+                return orderServiceReadDto;
+            }
+
+            return null;
         }
     }
 }

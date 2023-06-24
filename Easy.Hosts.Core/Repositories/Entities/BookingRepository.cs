@@ -88,5 +88,18 @@ namespace Easy.Hosts.Core.Repositories.Entities
 
             return bookingReadDto;
         }
+
+        public async Task<BookingReadDto> GetBookingByUserIdOrderServiceAsync(string id)
+        {
+            Booking result = await _context.Set<Booking>()
+                .Include(x => x.Bedroom)
+                .Include(x => x.User)
+                .Where(x => x.UserId == id && x.Status == BookingStatus.Checkin)
+                .FirstOrDefaultAsync();
+
+            BookingReadDto bookingReadDtos = _mapper.Map<BookingReadDto>(result);
+
+            return bookingReadDtos;
+        }
     }
 }

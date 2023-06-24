@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Easy.Hosts.Core.Repositories.Interface;
-using Easy.Hosts.Core.DTOs.Product;
+using Easy.Hosts.Core.DTOs.ProductDto;
 
 namespace Easy.Hosts.Core.Repositories.Entities
 {
@@ -27,7 +27,7 @@ namespace Easy.Hosts.Core.Repositories.Entities
                 CreatedAt = DateTime.Now,
                 UpdatedAt = DateTime.Now,
                 Name = productCreate.Name,
-                Quatity = productCreate.Quantity,
+                Quantity = productCreate.Quantity,
             };
 
             await _context.Set<Product>().AddAsync(product);

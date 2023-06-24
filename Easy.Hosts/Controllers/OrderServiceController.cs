@@ -124,5 +124,22 @@ namespace Easy.Hosts.Controllers
             _logger.LogInformation(MyLogEvents.GetItemNotFound ,$"Not found Order Service");
             return NotFound();
         }
+
+        [HttpPatch("completedOrderService/{id:guid}")]
+        public async Task<IActionResult> CompletedOrderService(Guid id, [FromBody] OrderServiceAssignDto orderServiceAssignDto)
+        {
+            OrderServiceReadDto orderServiceReadDto = await _orderServiceRepository.ClompletedOrderServiceAsync(id, orderServiceAssignDto);
+
+            if (orderServiceReadDto is null)
+            {
+                _logger.LogInformation(MyLogEvents.UpdateItemNotFound, $"Assign Failed, Order Service Id: {id}");
+                return NoContent();
+            }
+
+            _logger.LogInformation(MyLogEvents.UpdateItem, $"Assign Order Service to Employee Id: {orderServiceAssignDto.EmployeId}.");
+            return Ok(orderServiceReadDto);
+        }
+
+
     }
 }

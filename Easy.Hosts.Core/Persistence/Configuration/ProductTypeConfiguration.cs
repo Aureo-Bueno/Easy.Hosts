@@ -24,7 +24,7 @@ namespace Easy.Hosts.Core.Persistence.Configuration
             builder.Property(p => p.Name)
                 .HasColumnName("NAME_PRODUCT");
 
-            builder.Property(p => p.Quatity)
+            builder.Property(p => p.Quantity)
                 .HasColumnName("QUANTITY");
         }
     }

@@ -183,7 +183,7 @@ namespace Easy.Hosts.Core.Migrations
 
             modelBuilder.Entity("Easy.Hosts.Core.Domain.Product", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("ProductId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("PRODUCT_ID");
@@ -196,7 +196,7 @@ namespace Easy.Hosts.Core.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("NAME_PRODUCT");
 
-                    b.Property<int>("Quatity")
+                    b.Property<int>("Quantity")
                         .HasColumnType("int")
                         .HasColumnName("QUANTITY");
 
@@ -204,7 +204,7 @@ namespace Easy.Hosts.Core.Migrations
                         .HasColumnType("datetime2")
                         .HasColumnName("UPDATED_AT");
 
-                    b.HasKey("Id");
+                    b.HasKey("ProductId");
 
                     b.ToTable("TB_PRODUCT", (string)null);
                 });

@@ -1,13 +1,10 @@
 ﻿using Easy.Hosts.Core.Domain;
-using Easy.Hosts.Core.DTOs.Product;
+using Easy.Hosts.Core.DTOs.ProductDto;
 using Easy.Hosts.Core.Repositories.Interface;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Easy.Hosts.Controllers
 {
@@ -31,7 +28,8 @@ namespace Easy.Hosts.Controllers
         [HttpGet("{id:guid}")]
         public async Task<IActionResult> GetById([FromRoute] Guid id)
         {
-            return Ok();
+            Product product = await _productRepository.GetByIdAsync(id);
+            return Ok(product);
         }
 
         [HttpPost]

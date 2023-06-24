@@ -1,5 +1,5 @@
 ﻿using Easy.Hosts.Core.Domain;
-using Easy.Hosts.Core.DTOs.Product;
+using Easy.Hosts.Core.DTOs.ProductDto;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
